@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script data-od-sandbox-shim>(function(){
+  function makeStore(){
+    var data = {};
+    var api = {
+      getItem: function(k){ return Object.prototype.hasOwnProperty.call(data, k) ? data[k] : null; },
+      setItem: function(k, v){ data[k] = String(v); },
+      removeItem: function(k){ delete data[k]; },
+      clear: function(){ data = {}; },
+      key: function(i){ return Object.keys(data)[i] || null; }
+    };
+    Object.defineProperty(api, 'length', { get: function(){ return Object.keys(data).length; } });
+    return api;
+  }
+  function tryShim(name){
+    var works = false;
+    try { works = !!window[name] && typeof window[name].getItem === 'function'; void window[name].length; }
+    catch (_) { works = false; }
+    if (works) return;
+    try { Object.defineProperty(window, name, { configurable: true, value: makeStore() }); }
+    catch (_) { try { window[name] = makeStore(); } catch (__) {} }
+  }
+  tryShim('localStorage');
+  tryShim('sessionStorage');
+  document.addEventListener('click', (e) => {
+    if (!e.target || !(e.target instanceof Element)) return;
+    var link = e.target.closest('a[href]');
+    if (!link) return;
+    var href = link.getAttribute('href');
+    if (href === null) return;
+    var isAnchor = href.startsWith('#') || href === '';
+    if (isAnchor) {
+      e.preventDefault();
+      if (href === '' || href === '#') {
+        window.scrollTo({ top: 0 });
+        history.replaceState(null, '', ' ');
+      } else {
+        var targetId = href.slice(1);
+        var target = targetId ? document.getElementById(targetId) : null;
+        if (target) {
+          target.scrollIntoView();
+          location.hash === href && history.replaceState(null, '', ' ');
+          location.hash = href;
+        }
+      }
+    } else if (link.getAttribute('target') === '_blank') {
+      e.preventDefault();
+      let safe = false;
+      try {
+        var url = new URL(href, location.href);
+        safe =
+          url.protocol === 'http:' ||
+          url.protocol === 'https:' ||
+          url.protocol === 'mailto:';
+      } catch (_) {}
+      safe && window.open(href, '_blank', 'noopener,noreferrer');
+    }
+  });
+})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Koers — A plan that thinks in race-days.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1A1A18;
+  --paper:#F4EFE7;
+  --paper-deep:#EDE6D8;
+  --paper-warm:#EAE3D2;
+  --card:#FBF8F2;
+  --card-elev:#FFFFFF;
+  --rule:#D9D2C2;
+  --rule-faint:#E3DCCB;
+  --rule-soft:#EBE4D5;
+  --muted:#6B6355;
+  --dim:#978E7D;
+  --faint:#B8AE9B;
+  --accent:#7A4A28;
+  --success:#2D6B3A;
+  --success-bg:#E5EFE1;
+  --warn:#8A6420;
+  --warn-bg:#F2E8D0;
+  --font-display:'Fraunces',Georgia,serif;
+  --font-body:'Geist',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --font-mono:'Geist Mono',ui-monospace,'JetBrains Mono',Menlo,monospace;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:14.5px;
+  line-height:1.6;
+  font-feature-settings:"ss01","kern","tnum";
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+.kicker{font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* Masthead */
+.masthead{border-bottom:1px solid var(--rule);padding:14px 0;background:var(--paper);position:sticky;top:0;z-index:50}
+.masthead .row{display:flex;align-items:center;gap:24px}
+.brand{font-family:var(--font-display);font-style:italic;font-size:24px;font-weight:400;letter-spacing:-0.02em;text-decoration:none;color:var(--ink)}
+.masthead .byline{font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);padding-left:24px;border-left:1px solid var(--rule);margin-left:8px;flex:1}
+.masthead .live{display:inline-flex;align-items:center;gap:6px;color:var(--accent)}
+.masthead .live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:0.3}}
+.nav{display:flex;gap:24px;align-items:center}
+.nav a{font-size:13px;color:var(--ink);text-decoration:none;font-weight:500}
+.nav a:hover{color:var(--accent)}
+.nav .cta{padding:8px 14px;background:var(--ink);color:var(--paper);font-size:12px;letter-spacing:0.02em;border-radius:2px}
+.nav .cta:hover{background:var(--accent)}
+
+/* Hero — Race plan document */
+.briefing{padding:48px 0 0}
+.briefing-head{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:end;padding-bottom:48px;border-bottom:1px solid var(--ink)}
+.briefing-head h1{font-family:var(--font-display);font-weight:400;font-size:clamp(56px,7.5vw,108px);line-height:0.96;letter-spacing:-0.035em;margin-top:18px}
+.briefing-head h1 em{font-style:italic}
+.briefing-head .ledef{font-size:15.5px;line-height:1.6;color:var(--muted);max-width:440px;padding-top:18px;border-top:1px solid var(--rule);margin-top:24px}
+.brief-photo{aspect-ratio:5/6;background:#1a1a18;overflow:hidden;position:relative}
+.brief-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(0.72) contrast(1.08)}
+.brief-photo .tag{position:absolute;top:16px;left:16px;background:var(--paper);color:var(--ink);font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;padding:6px 10px}
+.brief-photo .cap{position:absolute;bottom:16px;left:16px;right:16px;color:var(--paper);font-family:var(--font-mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;line-height:1.6}
+
+/* Race-day stat row */
+.statbar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--ink);padding:32px 0}
+.statbar > div{border-right:1px solid var(--rule);padding-right:32px}
+.statbar > div:last-child{border-right:none}
+.statbar .k{font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.statbar .v{font-family:var(--font-display);font-size:64px;font-weight:400;line-height:0.94;letter-spacing:-0.035em;font-variant-numeric:tabular-nums}
+.statbar .v em{font-style:italic}
+.statbar .u{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-left:6px}
+.statbar .sub{font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+.statbar .pos{color:var(--success)}
+.statbar .neg{color:var(--accent)}
+
+/* Race calendar strip */
+.race-strip{padding:24px 0;border-bottom:1px solid var(--rule)}
+.race-strip .row{display:flex;align-items:center;gap:16px;overflow-x:auto;scrollbar-width:thin}
+.race-strip .col-label{font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);flex-shrink:0;padding-right:16px;border-right:1px solid var(--rule)}
+.race-chip{flex-shrink:0;display:flex;align-items:baseline;gap:10px;padding:6px 14px;border:1px solid var(--rule);background:var(--card);font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em}
+.race-chip .date{color:var(--muted)}
+.race-chip .nm{font-family:var(--font-display);font-style:italic;font-size:14px;letter-spacing:-0.005em;color:var(--ink);font-feature-settings:"kern"}
+.race-chip.active{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.race-chip.active .date,.race-chip.active .nm{color:var(--paper)}
+
+/* Section base */
+section{padding:96px 0}
+.sec-head{display:grid;grid-template-columns:80px 1fr 1.2fr;gap:48px;align-items:start;margin-bottom:56px}
+.sec-head .roman{font-family:var(--font-display);font-style:italic;font-size:42px;font-weight:400;color:var(--accent);line-height:1}
+.sec-head h2{font-family:var(--font-display);font-size:48px;line-height:1.02;letter-spacing:-0.025em;font-weight:400}
+.sec-head h2 em{font-style:italic}
+.sec-head .deck{font-size:15px;line-height:1.65;color:var(--muted);padding-top:14px;border-top:1px solid var(--rule)}
+.sec-head .deck strong{color:var(--ink);font-weight:500}
+
+/* II — Features as numbered race-plan items */
+.plan-list{display:grid;gap:0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.plan-row{display:grid;grid-template-columns:60px 200px 1.2fr 1fr 140px;gap:32px;padding:24px 0;border-bottom:1px solid var(--rule-faint);align-items:center}
+.plan-row:last-child{border-bottom:none}
+.plan-row:hover{background:var(--card)}
+.plan-row .pn{font-family:var(--font-mono);font-size:11px;letter-spacing:0.18em;color:var(--muted)}
+.plan-row .pt{font-family:var(--font-display);font-size:21px;letter-spacing:-0.015em;font-weight:400;line-height:1.2}
+.plan-row .pt em{font-style:italic}
+.plan-row .pd{font-size:13.5px;color:var(--muted);line-height:1.55}
+.plan-row .pm{font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;color:var(--ink)}
+.plan-row .pm span{display:block;color:var(--muted);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:2px}
+.plan-row .pp{font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);text-align:right}
+
+/* III — Coach mode (full-bleed note) */
+.coach-fb{background:var(--paper-deep);padding:96px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.coach-fb .grid{display:grid;grid-template-columns:1fr 1.4fr;gap:64px;align-items:center}
+.coach-fb h2{font-family:var(--font-display);font-size:54px;line-height:1;letter-spacing:-0.03em;font-weight:400}
+.coach-fb h2 em{font-style:italic}
+.coach-fb p{margin-top:24px;font-size:16px;line-height:1.65;color:var(--ink);max-width:420px}
+.coach-fb .who-row{display:flex;align-items:center;gap:14px;margin-top:36px}
+.avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#8a7358,#5a4a38);color:var(--paper);font-family:var(--font-display);font-style:italic;font-size:24px;display:flex;align-items:center;justify-content:center;font-weight:400}
+.coach-fb .who{font-family:var(--font-display);font-size:18px;font-weight:500;letter-spacing:-0.005em}
+.coach-fb .role{font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.note-card{background:var(--paper);border:1px solid var(--rule);padding:36px 36px 24px;position:relative}
+.note-card .head{font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);padding-bottom:16px;border-bottom:1px solid var(--rule-faint);margin-bottom:24px;display:flex;justify-content:space-between}
+.note-card .quote{font-family:var(--font-display);font-style:italic;font-size:28px;line-height:1.35;letter-spacing:-0.015em;margin-bottom:20px;color:var(--ink)}
+.note-card .body{font-size:14.5px;color:var(--muted);line-height:1.65;margin-bottom:24px}
+.note-card .body strong{color:var(--ink);font-weight:500}
+.note-card .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule-faint);border-top:1px solid var(--rule-faint);border-bottom:1px solid var(--rule-faint);margin:0 -36px 24px}
+.note-card .stats > div{background:var(--paper);padding:16px 24px}
+.note-card .stats .k{font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.note-card .stats .v{font-family:var(--font-display);font-size:24px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;line-height:1}
+.note-card .stats .u{font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-left:3px}
+.note-card .actions{display:flex;gap:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em}
+.note-card .actions a{color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--dim);padding-bottom:1px}
+.pill{display:inline-block;padding:3px 8px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;border:1px solid var(--rule);background:var(--card)}
+.pill.today{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.pill.key{border-color:var(--ink);font-weight:500}
+.pill.completed{color:var(--success);border-color:var(--success);background:var(--success-bg)}
+
+/* IV — How it works — operational POV */
+.tl{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--ink)}
+.tl-col{padding:32px;border-right:1px solid var(--rule)}
+.tl-col:last-child{border-right:none}
+.tl-col .when{font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.tl-col h4{font-family:var(--font-display);font-size:30px;line-height:1.08;letter-spacing:-0.02em;font-weight:400;margin-bottom:14px}
+.tl-col h4 em{font-style:italic}
+.tl-col p{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:20px}
+.tl-col .items{list-style:none;border-top:1px solid var(--rule-faint)}
+.tl-col .items li{padding:12px 0;border-bottom:1px solid var(--rule-faint);font-size:13px;color:var(--ink);display:grid;grid-template-columns:60px 1fr;gap:14px;align-items:baseline}
+.tl-col .items li .d{font-family:var(--font-mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
+
+/* V — Integrations grid */
+.integ{background:var(--paper-deep);padding:96px 0;border-top:1px solid var(--rule)}
+.integ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:48px}
+.int-cell{background:var(--paper);padding:32px 24px;display:flex;flex-direction:column;gap:8px;min-height:140px}
+.int-cell .nm{font-family:var(--font-display);font-size:22px;letter-spacing:-0.015em;font-weight:500}
+.int-cell .tg{font-family:var(--font-mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
+.int-cell .ds{font-size:12.5px;color:var(--muted);line-height:1.55;margin-top:auto;padding-top:12px}
+.int-cell .ar{font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-top:6px}
+
+/* VI — Methodology FAQ for racers */
+.faq{padding:96px 0;border-bottom:1px solid var(--rule)}
+.faq .row{display:grid;grid-template-columns:1fr 1fr;gap:64px}
+.faq h3{font-family:var(--font-display);font-style:italic;font-size:18px;font-weight:400;letter-spacing:-0.005em;margin-bottom:12px;line-height:1.3}
+.faq .a{font-size:14px;color:var(--muted);line-height:1.65}
+.faq .a strong{color:var(--ink);font-weight:500}
+.faq-list{display:grid;gap:32px}
+.faq-item{border-top:1px solid var(--rule);padding-top:16px}
+.faq-item .q-tag{font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+
+/* CTA — start-line */
+.start{padding:120px 0;background:var(--paper);border-top:1px solid var(--ink);border-bottom:1px solid var(--rule);position:relative;overflow:hidden}
+.start .grid{display:grid;grid-template-columns:1.3fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
+.start h2{font-family:var(--font-display);font-size:clamp(56px,8vw,112px);line-height:0.96;letter-spacing:-0.035em;font-weight:400}
+.start h2 em{font-style:italic}
+.start p{font-size:18px;line-height:1.55;color:var(--ink);margin-top:24px;max-width:500px;font-family:var(--font-display);font-weight:400}
+.start .actions{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{background:var(--ink);color:var(--paper);padding:16px 26px;font-family:var(--font-body);font-size:14px;font-weight:500;text-decoration:none;border:1px solid var(--ink);border-radius:2px;letter-spacing:0.01em}
+.btn-primary:hover{background:var(--accent);border-color:var(--accent)}
+.btn-secondary{background:transparent;color:var(--ink);padding:16px 26px;font-size:14px;font-weight:500;text-decoration:none;border:1px solid var(--ink);border-radius:2px}
+.btn-secondary:hover{background:var(--ink);color:var(--paper)}
+.fineprint{margin-top:20px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.start-stats{border-left:1px solid var(--rule);padding-left:40px}
+.start-stats > div{padding:20px 0;border-bottom:1px solid var(--rule-faint)}
+.start-stats > div:last-child{border-bottom:none}
+.start-stats .k{font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+.start-stats .v{font-family:var(--font-display);font-size:36px;letter-spacing:-0.025em;font-weight:400;font-variant-numeric:tabular-nums;line-height:1;margin-top:8px}
+.start-stats .v em{font-style:italic}
+.start-stats .u{font-family:var(--font-mono);font-size:11px;color:var(--muted);margin-left:4px;text-transform:uppercase;letter-spacing:0.1em}
+.start-stats .sub{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+
+/* Footer */
+footer{padding:48px 0 32px;background:var(--paper-deep)}
+footer .row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+footer .col{font-size:12px;color:var(--muted);line-height:1.7}
+footer .brand{font-family:var(--font-display);font-style:italic;font-size:22px;color:var(--ink)}
+footer .links{display:flex;gap:24px;font-size:12px}
+footer .links a{color:var(--ink);text-decoration:none}
+.colophon-meta{font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:16px}
+
+/* Responsive */
+@media (max-width:1023px){
+  .wrap{padding:0 24px}
+  .briefing-head{grid-template-columns:1fr;gap:32px}
+  .brief-photo{aspect-ratio:3/2;max-height:420px}
+  .statbar{grid-template-columns:repeat(2,1fr)}
+  .statbar > div{border-right:none;border-bottom:1px solid var(--rule);padding:18px 0}
+  .statbar .v{font-size:44px}
+  .sec-head{grid-template-columns:1fr;gap:16px}
+  .sec-head h2{font-size:38px}
+  .plan-row{grid-template-columns:40px 1fr;gap:14px;padding:18px 0}
+  .plan-row .pd,.plan-row .pm,.plan-row .pp{grid-column:2}
+  .plan-row .pp{text-align:left;margin-top:4px}
+  .coach-fb .grid{grid-template-columns:1fr;gap:40px}
+  .coach-fb h2{font-size:38px}
+  .tl{grid-template-columns:1fr;border-top:1px solid var(--ink)}
+  .tl-col{border-right:none;border-bottom:1px solid var(--rule)}
+  .integ-grid{grid-template-columns:repeat(2,1fr)}
+  .faq .row{grid-template-columns:1fr;gap:32px}
+  .start .grid{grid-template-columns:1fr;gap:40px}
+  .start-stats{border-left:none;border-top:1px solid var(--rule);padding-left:0;padding-top:8px}
+}
+@media (max-width:640px){
+  .wrap{padding:0 20px}
+  section{padding:64px 0}
+  .briefing{padding:24px 0 0}
+  .briefing-head h1{font-size:48px}
+  .statbar .v{font-size:36px}
+  .race-strip{display:none}
+  .note-card{padding:24px}
+  .note-card .stats{margin:0 -24px 20px}
+  .start h2{font-size:48px}
+  .coach-fb{padding:64px 0}
+  .integ{padding:64px 0}
+  .integ-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Masthead -->
+<header class="masthead">
+  <div class="wrap row">
+    <a href="#" class="brand">Koers</a>
+    <div class="byline">Race Briefing · Vol. III · No. 17 · <span class="live">Live for 12,400 racers</span></div>
+    <nav class="nav">
+      <a href="#plan">The plan</a>
+      <a href="#mia">Mia</a>
+      <a href="#how">Race-day</a>
+      <a href="#" class="cta">Start free month →</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero — Race briefing -->
+<section class="briefing">
+  <div class="wrap">
+    <div class="briefing-head">
+      <div>
+        <div class="kicker">A training app for racing — built to count down to the line.</div>
+        <h1>A plan that thinks<br>in <em>race-days.</em></h1>
+        <p class="ledef">Koers reads your training file the moment you stop, checks your TSB against your A-race, and writes Tuesday's session before you've finished your coffee. For Cat 3–5 racers and gravel riders with one big day circled in the calendar.</p>
+      </div>
+      <figure class="brief-photo">
+        <div class="tag">Field photo · 04:47 GMT</div>
+        <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=1200&q=80&auto=format&fit=crop" alt="Cyclist on a climb at first light">
+        <div class="cap">Noah K · Cat 3 · 55 days to Unbound · TSB −4</div>
+      </figure>
+    </div>
+
+    <!-- Race-day stat row -->
+    <div class="statbar tnum">
+      <div>
+        <div class="k">Countdown · A-race</div>
+        <div class="v"><span class="neg">55</span><span class="u">days</span></div>
+        <div class="sub">Unbound Gravel 200 · Jun 1, 2026</div>
+      </div>
+      <div>
+        <div class="k">Training Stress Balance</div>
+        <div class="v">−4<span class="u">TSB</span></div>
+        <div class="sub">Where Mia wants you. Fresh enough to race, tired enough to build.</div>
+      </div>
+      <div>
+        <div class="k">Plans being written right now</div>
+        <div class="v tnum">12,400</div>
+        <div class="sub">Across 38 countries, 1,180 active A-races</div>
+      </div>
+      <div>
+        <div class="k">Cat 3 → 2 upgrades, '25</div>
+        <div class="v pos">+214</div>
+        <div class="sub">Racers who started on Koers and got the points</div>
+      </div>
+    </div>
+
+    <!-- Race calendar -->
+    <div class="race-strip">
+      <div class="row">
+        <div class="col-label">Spring &nbsp;'26</div>
+        <div class="race-chip"><span class="date">Mar 30</span><span class="nm">Pat's Peak Crit</span></div>
+        <div class="race-chip"><span class="date">Apr 13</span><span class="nm">Battenkill</span></div>
+        <div class="race-chip"><span class="date">May 04</span><span class="nm">Tour of the Battenkill</span></div>
+        <div class="race-chip"><span class="date">May 18</span><span class="nm">Gravel Locos</span></div>
+        <div class="race-chip active"><span class="date">Jun 01</span><span class="nm">Unbound 200 · A-race</span></div>
+        <div class="race-chip"><span class="date">Jun 28</span><span class="nm">SBT GRVL</span></div>
+        <div class="race-chip"><span class="date">Aug 03</span><span class="nm">Leadville 100</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- II — Plan as race-plan items -->
+<section id="plan">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="roman">I.</div>
+      <h2>The week,<br>as a <em>race plan.</em></h2>
+      <div class="deck"><strong>Six items, every Sunday.</strong> Mia writes them as you'd write a race plan — duration, target, why. Not a feed of suggestions; a document you can take to the start line.</div>
+    </div>
+    <div class="plan-list">
+      <div class="plan-row">
+        <div class="pn">I.</div>
+        <div class="pt">Weekly <em>letter</em></div>
+        <div class="pd">Sunday 20:00 local. Five sessions, written in sentences. Reads like a chapter of a training journal — three minutes top to bottom.</div>
+        <div class="pm"><span>Cadence</span>Sun 20:00 · weekly</div>
+        <div class="pp">→ See sample</div>
+      </div>
+      <div class="plan-row">
+        <div class="pn">II.</div>
+        <div class="pt">Power <em>targets</em>, range-not-number</div>
+        <div class="pd">Every interval gets a window, not a single watt. "275–288W" because no rider holds a single number for 4 minutes. Pushed straight to your head unit.</div>
+        <div class="pm"><span>Spec</span>FTP-anchored · 5% bands</div>
+        <div class="pp">→ Workout spec</div>
+      </div>
+      <div class="plan-row">
+        <div class="pn">III.</div>
+        <div class="pt"><em>Live</em> plan edits</div>
+        <div class="pd">HRV crashed overnight? Wednesday's VO2 moves to Friday at 06:00, before you wake up. The reason sits one tap away — a tracked edit, not a notification.</div>
+        <div class="pm"><span>Latency</span>&lt; 60s after sync</div>
+        <div class="pp">→ Edit log</div>
+      </div>
+      <div class="plan-row">
+        <div class="pn">IV.</div>
+        <div class="pt">A-race <em>briefing</em></div>
+        <div class="pd">Two weeks out: pacing plan, course chapters, expected losses, start-line wattage. For Unbound: where the field shatters at mile 31, what to eat at the Alma checkpoint, when not to chase.</div>
+        <div class="pm"><span>Delivery</span>T−14 days</div>
+        <div class="pp">→ Sample briefing</div>
+      </div>
+      <div class="plan-row">
+        <div class="pn">V.</div>
+        <div class="pt">Recovery <em>read</em>, in a sentence</div>
+        <div class="pd">TSB, HRV trend, sleep load, last week's TSS — Mia condenses it to one line. "You're at −4 TSB, which is exactly where I want you before Unbound." The dashboard exists; you don't have to read it.</div>
+        <div class="pm"><span>Source</span>Garmin · Oura · Whoop</div>
+        <div class="pp">→ How TSB works</div>
+      </div>
+      <div class="plan-row">
+        <div class="pn">VI.</div>
+        <div class="pt">Ask Mia <em>anything</em></div>
+        <div class="pd">"I'm sick." "What if I skip Friday?" "Tailwind out, headwind back — should I still go to threshold?" Sentences in, sentences out. Plan edits attached.</div>
+        <div class="pm"><span>Response</span>&lt; 90s · 24/7</div>
+        <div class="pp">→ Try the chat</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- III — Coach Mode (full-bleed) -->
+<section class="coach-fb" id="mia">
+  <div class="wrap grid">
+    <div>
+      <div class="kicker" style="margin-bottom:18px">II. — Coach mode</div>
+      <h2>The coach is the <em>product.</em></h2>
+      <p>Mia is a coach written by coaches — periodization from Joe Friel, distribution from Stephen Seiler, gravel pacing from the panel we built Koers with. She reads your week, edits your plan, and writes you a sentence. Once a day. Never an exclamation point.</p>
+      <p>If you already have a human coach, Koers becomes the journal. Your coach writes the plan; Mia writes the kickers, the briefings, the recovery notes.</p>
+      <div class="who-row">
+        <div class="avatar">M</div>
+        <div>
+          <div class="who">Mia Vossen</div>
+          <div class="role">Your coach · Co-built with WorldTour staff</div>
+        </div>
+      </div>
+    </div>
+    <div class="note-card">
+      <div class="head">
+        <span>Today's note · 8:12 AM · Tuesday</span>
+        <span style="display:flex;gap:6px"><span class="pill today">Today</span><span class="pill key">Key</span></span>
+      </div>
+      <div class="quote">"Don't race the first one, Noah. The point is the fifth."</div>
+      <div class="body">You're at <strong>−4 TSB</strong>, which is exactly where I want you before Unbound. Today opens the top end. Keep cadence above 88 on the efforts. If you can't hold 275 by rep four, stop — we'll make it up Saturday.</div>
+      <div class="stats tnum">
+        <div><div class="k">Target</div><div class="v">275–288<span class="u">W</span></div></div>
+        <div><div class="k">Duration</div><div class="v">1:15</div></div>
+        <div><div class="k">Load</div><div class="v">85<span class="u">TSS</span></div></div>
+      </div>
+      <div class="actions">
+        <a href="#">Send to Garmin →</a>
+        <a href="#">Open in player</a>
+        <a href="#">Ask Mia</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IV — How it works -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="roman">III.</div>
+      <h2>The first <em>twelve weeks</em>, by the day.</h2>
+      <div class="deck"><strong>Race plans live in three timelines.</strong> Koers writes for all of them at once: the start of the week, the middle of the season, the morning of the race.</div>
+    </div>
+    <div class="tl">
+      <div class="tl-col">
+        <div class="when">T − 12 weeks · Onboarding</div>
+        <h4>You'll be on the bike <em>Tuesday.</em></h4>
+        <p>Six-minute conversation. Race date, FTP guess, last season, two key data points. Mia writes week one tonight.</p>
+        <ul class="items">
+          <li><span class="d">Day 1</span>Calibration conversation</li>
+          <li><span class="d">Day 2</span>First workout: openers</li>
+          <li><span class="d">Day 3</span>FTP check (built in)</li>
+          <li><span class="d">Day 7</span>First weekly letter</li>
+        </ul>
+      </div>
+      <div class="tl-col">
+        <div class="when">T − 8 weeks · The build</div>
+        <h4>The plan starts to <em>edit you back.</em></h4>
+        <p>Volume climbs. Three sessions become specific to Unbound: gravel-specific intensity, long sub-threshold, a fuelling rehearsal at race pace.</p>
+        <ul class="items">
+          <li><span class="d">Mon</span>Recovery + journal</li>
+          <li><span class="d">Tue</span>VO2 / threshold</li>
+          <li><span class="d">Thu</span>Race-specific intervals</li>
+          <li><span class="d">Sat</span>Long endurance + fuel</li>
+        </ul>
+      </div>
+      <div class="tl-col">
+        <div class="when">T − 0 · Race day</div>
+        <h4>The briefing <em>becomes</em> the plan.</h4>
+        <p>You get a single-page race plan: start-line wattage, pacing chapters, the mile markers where the field will split. On your phone, with you, at the start.</p>
+        <ul class="items">
+          <li><span class="d">T−14d</span>Race briefing arrives</li>
+          <li><span class="d">T−7d</span>Taper begins (TSB drift)</li>
+          <li><span class="d">T−1d</span>Final note from Mia</li>
+          <li><span class="d">T+1d</span>Debrief, by sentence</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- V — Integrations -->
+<section class="integ">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:24px">
+      <div class="roman">IV.</div>
+      <h2>Speaks to the <em>bike</em>, the watch, the coach.</h2>
+      <div class="deck"><strong>Two-way sync, no exports.</strong> Workouts land on your head unit before you're out the door. Files come back the second you stop. No folders, no cables, no "import from Garmin Connect."</div>
+    </div>
+    <div class="integ-grid">
+      <div class="int-cell">
+        <div class="nm">Garmin</div>
+        <div class="tg">Push & sync · Connect IQ</div>
+        <div class="ds">Edge 530, 540, 830, 840, 1040, 1050. ERG and resistance modes. Course profiles overlay.</div>
+        <div class="ar">→ Setup guide</div>
+      </div>
+      <div class="int-cell">
+        <div class="nm">Wahoo</div>
+        <div class="tg">Push & sync</div>
+        <div class="ds">Bolt 1/2/3, Roam 1/2/3, Element. Live workout cards. Smart trainers via Wahoo Fitness.</div>
+        <div class="ar">→ Setup guide</div>
+      </div>
+      <div class="int-cell">
+        <div class="nm">Hammerhead</div>
+        <div class="tg">Push & sync</div>
+        <div class="ds">Karoo 2/3. Native Koers app, structured workout view, course overlay.</div>
+        <div class="ar">→ Setup guide</div>
+      </div>
+      <div class="int-cell">
+        <div class="nm">Strava</div>
+        <div class="tg">Read · post-ride</div>
+        <div class="ds">Auto-attach Koers's session notes to your activity. Segment matching with Mia's targets.</div>
+        <div class="ar">→ Connect</div>
+      </div>
+      <div class="int-cell">
+        <div class="nm">Zwift</div>
+        <div class="tg">Plan export</div>
+        <div class="ds">Workouts open in Zwift's player. The week shows up under "Custom Workouts."</div>
+        <div class="ar">→ Connect</div>
+      </div>
+      <div class="int-cell">
+        <div class="nm">TrainerRoad</div>
+        <div class="tg">Import history</div>
+        <div class="ds">Bring your last 18 months of TSS, FTP history, and adaptive plan data. Mia calibrates on it.</div>
+        <div class="ar">→ Connect</div>
+      </div>
+      <div class="int-cell">
+        <div class="nm">Oura · Whoop · Garmin</div>
+        <div class="tg">Recovery</div>
+        <div class="ds">HRV, sleep, RHR feed the plan in the morning. A bad night = Wednesday's VO2 becomes Friday's.</div>
+        <div class="ar">→ Connect</div>
+      </div>
+      <div class="int-cell">
+        <div class="nm">Apple Health · Komoot</div>
+        <div class="tg">Sleep · Routes</div>
+        <div class="ds">Sleep load from Apple Watch. Course files from Komoot pre-load before long days.</div>
+        <div class="ar">→ Connect</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VI — Methodology FAQ -->
+<section class="faq" id="science">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:48px">
+      <div class="roman">V.</div>
+      <h2>The <em>method</em>, for racers.</h2>
+      <div class="deck"><strong>Mia is built from a small stack of well-tested ideas.</strong> Below: the five questions amateur racers ask in their first month, and what the literature says.</div>
+    </div>
+    <div class="row">
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="q-tag">Q · 01 — Method</div>
+          <h3>Why polarized? My current plan is sweet-spot.</h3>
+          <div class="a">Seiler's '10 work and successor papers found that elites distribute 80% of training time below LT1 and 20% above LT2 — a "polarized" model. For amateur racers with limited hours, sweet-spot works for a block, then plateaus. Koers builds the base polarized, then adds the race-specific intensity in the last six weeks. <strong>Translation: more easy and more hard, less middle.</strong></div>
+        </div>
+        <div class="faq-item">
+          <div class="q-tag">Q · 02 — TSB</div>
+          <h3>What's the right TSB on race day?</h3>
+          <div class="a">For an A-race: between +5 and +15 — fresh, but not stale. For a gravel epic like Unbound where survival matters more than top-end: closer to +20. Mia tapers to your race-specific TSB target, never a generic one. <strong>You'll see your projected TSB on race-day in the briefing.</strong></div>
+        </div>
+        <div class="faq-item">
+          <div class="q-tag">Q · 03 — Volume</div>
+          <h3>I have 8 hours a week. Can I still race Unbound?</h3>
+          <div class="a">Yes, for the finish. The 4.5-hour Cat 3 racer and the 14-hour Unbound finisher are the same person on different weeks. Koers prioritizes the long Saturday and one quality midweek session. If you have 10 hours: add a second quality day. <strong>The plan is built for your hours, not the pro's.</strong></div>
+        </div>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="q-tag">Q · 04 — FTP</div>
+          <h3>How do you test FTP without ruining a week?</h3>
+          <div class="a">Koers uses a built-in 20-min effort at week 3 — not as a standalone "test day" but inside an opener workout that wasn't going to be easy anyway. Critical Power model on top, recalibrated every 28 days from your real ride data. <strong>You won't see a "test day" on the calendar; the test is in the data.</strong></div>
+        </div>
+        <div class="faq-item">
+          <div class="q-tag">Q · 05 — Coaches</div>
+          <h3>I already have a coach. Is Koers redundant?</h3>
+          <div class="a">No. Coach mode lets your coach write the plan and Koers handle the daily layer: the recovery read, the briefing, the day-of-ride note. Your coach sees everything Koers sees — your TSB, your edits, your conversation with Mia. <strong>~340 coaches use Koers as their journal layer.</strong></div>
+        </div>
+        <div class="faq-item">
+          <div class="q-tag">Q · 06 — Free month</div>
+          <h3>What happens if I don't continue?</h3>
+          <div class="a">You keep the plan you have. You stop getting new ones. You can re-up any time. There's no streak to lose, no badges to expire, no notifications begging you to come back. <strong>If the plan stops being useful, stop.</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Start CTA -->
+<section class="start" id="start">
+  <div class="wrap grid">
+    <div>
+      <div class="kicker" style="margin-bottom:24px">VI. — Start-line</div>
+      <h2>Your first<br>letter, <em>Sunday.</em></h2>
+      <p>Tell Mia what you're aiming at. The plan arrives Sunday night. The first month is free, no card. After that, $14/month — the price of one cycling magazine.</p>
+      <div class="actions">
+        <a href="#" class="btn-primary">Start free month →</a>
+        <a href="#" class="btn-secondary">Read a sample briefing</a>
+      </div>
+      <div class="fineprint">$14/mo · No streaks · No notifications · Cancel from the homepage</div>
+    </div>
+    <div class="start-stats tnum">
+      <div>
+        <div class="k">Racers training right now</div>
+        <div class="v">12,400<span class="u">on Koers</span></div>
+        <div class="sub">Across 38 countries, 1,180 active A-races</div>
+      </div>
+      <div>
+        <div class="k">A-races finished, '25</div>
+        <div class="v">3,180<span class="u">briefings</span></div>
+        <div class="sub">Unbound, Leadville, SBT GRVL, Mid South, Battenkill</div>
+      </div>
+      <div>
+        <div class="k">Category upgrades</div>
+        <div class="v"><em>+214</em><span class="u">Cat 3 → 2</span></div>
+        <div class="sub">Riders who started '25 on Koers and earned the points</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap row">
+    <div class="col">
+      <div class="brand">Koers</div>
+      <div class="colophon-meta">Vol. III · No. 17 · Race Briefing Issue · Built with Fraunces &amp; Geist</div>
+    </div>
+    <div class="links">
+      <a href="#">For coaches</a>
+      <a href="#">For teams</a>
+      <a href="#">Press</a>
+      <a href="#">Status</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample Plan — Koers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1A1A18;
+  --paper:#F4EFE7;
+  --paper-deep:#EDE6D8;
+  --paper-warm:#EAE3D2;
+  --card:#FBF8F2;
+  --card-elev:#FFFFFF;
+  --rule:#D9D2C2;
+  --rule-faint:#E3DCCB;
+  --muted:#6B6355;
+  --dim:#978E7D;
+  --faint:#B8AE9B;
+  --accent:#7A4A28;
+  --font-display:'Fraunces',Georgia,serif;
+  --font-body:'Geist','Söhne',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --font-mono:'Geist Mono',ui-monospace,Menlo,monospace;
+  --z2-bg:#EEF3F8; --z2-fg:#3A6080;
+  --z3-bg:#F0F4EE; --z3-fg:#3A6040;
+  --z4-bg:#F5F2EB; --z4-fg:#6A5A28;
+  --z5-bg:#FEF2EC; --z5-fg:#8A3A18;
+  --zss-bg:#F2EEF8; --zss-fg:#5A3A80;
+  --rest-bg:#F0EEEB; --rest-fg:#8A8070;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 40px}
+
+/* ─── MASTHEAD ─── */
+.masthead{
+  border-bottom:1px solid var(--rule);
+  padding:16px 0;
+  background:var(--paper);
+  position:sticky;top:0;z-index:50;
+}
+.mh-inner{display:flex;align-items:center;gap:24px}
+.back{
+  font-size:12px;color:var(--muted);text-decoration:none;
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);
+  letter-spacing:0.12em;text-transform:uppercase;
+  flex-shrink:0;
+}
+.back:hover{color:var(--ink)}
+.back span{font-size:16px;line-height:1}
+.mh-divider{width:1px;height:20px;background:var(--rule);flex-shrink:0}
+.brand{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:22px;
+  font-weight:400;
+  text-decoration:none;
+  color:var(--ink);
+  flex-shrink:0;
+}
+.mh-label{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.mh-cta{
+  margin-left:auto;
+  background:var(--ink);
+  color:var(--paper);
+  padding:9px 18px;
+  font-size:12px;
+  font-weight:500;
+  text-decoration:none;
+  border-radius:2px;
+  white-space:nowrap;
+  transition:background 0.15s;
+}
+.mh-cta:hover{background:var(--accent)}
+
+/* ─── PLAN HEADER ─── */
+.plan-header{
+  padding:72px 0 56px;
+  border-bottom:1px solid var(--rule);
+}
+.ph-grid{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:48px;
+  align-items:end;
+}
+.ph-eyebrow{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:16px;
+}
+.ph-title{
+  font-family:var(--font-display);
+  font-size:clamp(40px,6vw,72px);
+  line-height:0.95;
+  letter-spacing:-0.03em;
+  font-weight:300;
+  margin-bottom:20px;
+}
+.ph-title em{font-style:italic;font-weight:400;color:var(--accent)}
+.ph-lede{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:20px;
+  line-height:1.55;
+  font-weight:400;
+  max-width:580px;
+  color:var(--ink);
+  border-left:2px solid var(--accent);
+  padding-left:20px;
+}
+.ph-meta{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  align-items:flex-end;
+  text-align:right;
+  flex-shrink:0;
+}
+.ph-stat .label{
+  font-family:var(--font-mono);
+  font-size:8px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+.ph-stat .val{
+  font-family:var(--font-display);
+  font-size:22px;
+  font-weight:400;
+  letter-spacing:-0.02em;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ─── PHASE TIMELINE ─── */
+.phase-bar{
+  padding:28px 0;
+  border-bottom:1px solid var(--rule);
+  background:var(--paper-deep);
+}
+.pb-label{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:14px;
+}
+.pb-track{
+  display:grid;
+  grid-template-columns:3fr 4fr 3fr 2fr;
+  gap:2px;
+  border-radius:3px;
+  overflow:hidden;
+}
+.pb-phase{
+  padding:10px 14px;
+  position:relative;
+  cursor:default;
+}
+.pb-phase.base{background:#E8E3D8}
+.pb-phase.build{background:#DDD5C4}
+.pb-phase.peak{background:#D4CAB8}
+.pb-phase.taper{background:#CCC2B0}
+.pb-phase.active{outline:2px solid var(--accent);outline-offset:-2px}
+.pb-phase-name{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:3px;
+}
+.pb-phase-wks{
+  font-family:var(--font-display);
+  font-size:14px;
+  font-weight:400;
+  letter-spacing:-0.01em;
+}
+.pb-phase.active .pb-phase-name{color:var(--accent)}
+.pb-phase.active .pb-phase-wks{color:var(--ink)}
+
+/* ─── WEEK NAVIGATOR ─── */
+.week-nav{
+  padding:20px 0;
+  border-bottom:1px solid var(--rule);
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.week-nav::-webkit-scrollbar{display:none}
+.wn-inner{display:flex;gap:2px;min-width:max-content}
+.wn-week{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  padding:8px 14px;
+  border-radius:2px;
+  cursor:pointer;
+  color:var(--muted);
+  background:transparent;
+  border:1px solid transparent;
+  transition:all 0.12s;
+  white-space:nowrap;
+}
+.wn-week:hover{color:var(--ink);border-color:var(--rule)}
+.wn-week.active{
+  background:var(--ink);
+  color:var(--paper);
+  border-color:var(--ink);
+}
+.wn-week.deload{
+  border-style:dashed;
+  border-color:var(--rule);
+}
+.wn-week.deload.active{
+  border-style:solid;
+  background:var(--ink);
+  color:var(--paper);
+}
+.wn-divider{
+  width:1px;
+  background:var(--rule);
+  align-self:stretch;
+  margin:0 6px;
+}
+
+/* ─── MAIN LAYOUT ─── */
+.plan-body{
+  display:grid;
+  grid-template-columns:1fr 320px;
+  gap:0;
+  align-items:start;
+  min-height:70vh;
+}
+
+/* ─── WEEK PANEL ─── */
+.week-panel{
+  padding:48px 48px 48px 0;
+  border-right:1px solid var(--rule);
+}
+.week-eyebrow{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:24px;
+}
+.week-num{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:40px;
+  font-weight:400;
+  color:var(--accent);
+  line-height:1;
+}
+.week-meta{display:flex;flex-direction:column;gap:2px}
+.week-phase-tag{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.week-tss{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.12em;
+  color:var(--dim);
+}
+
+.week-lede{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:19px;
+  line-height:1.55;
+  font-weight:400;
+  margin-bottom:40px;
+  padding-bottom:32px;
+  border-bottom:1px solid var(--rule-faint);
+  max-width:580px;
+}
+
+/* ─── SESSION ROWS ─── */
+.session-list{display:flex;flex-direction:column;gap:2px}
+.session-row{
+  display:grid;
+  grid-template-columns:80px 1fr auto;
+  gap:16px;
+  align-items:start;
+  padding:18px 16px;
+  border-radius:3px;
+  cursor:pointer;
+  transition:background 0.12s;
+  position:relative;
+}
+.session-row:hover{background:var(--card)}
+.session-row.expanded{
+  background:var(--card);
+  border-radius:3px 3px 0 0;
+}
+.session-row.rest-day{cursor:default;opacity:0.55}
+.session-row.rest-day:hover{background:transparent}
+
+.sr-day{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  padding-top:3px;
+}
+.sr-content{}
+.sr-type{
+  font-family:var(--font-display);
+  font-size:18px;
+  font-weight:400;
+  letter-spacing:-0.01em;
+  line-height:1.25;
+  margin-bottom:4px;
+}
+.sr-detail{
+  font-size:12.5px;
+  color:var(--muted);
+  line-height:1.5;
+}
+.sr-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
+  padding-top:2px;
+}
+.zone-badge{
+  font-family:var(--font-mono);
+  font-size:8px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  padding:3px 9px;
+  border-radius:2px;
+  white-space:nowrap;
+}
+.z2{background:var(--z2-bg);color:var(--z2-fg)}
+.z3{background:var(--z3-bg);color:var(--z3-fg)}
+.z4{background:var(--z4-bg);color:var(--z4-fg)}
+.z5{background:var(--z5-bg);color:var(--z5-fg)}
+.zss{background:var(--zss-bg);color:var(--zss-fg)}
+.zrest{background:var(--rest-bg);color:var(--rest-fg)}
+.sr-dur{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.1em;
+  color:var(--dim);
+}
+.sr-chevron{
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--faint);
+  font-size:12px;
+  transition:transform 0.2s,color 0.15s;
+}
+.session-row:hover .sr-chevron{color:var(--muted)}
+.session-row.expanded .sr-chevron{transform:translateY(-50%) rotate(90deg);color:var(--accent)}
+
+/* ─── SESSION DRAWER ─── */
+.session-drawer{
+  background:var(--card);
+  border-radius:0 0 3px 3px;
+  border-top:1px solid var(--rule-faint);
+  overflow:hidden;
+  max-height:0;
+  transition:max-height 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.session-drawer.open{max-height:400px}
+.drawer-inner{padding:20px 16px 24px 112px}
+
+/* Mia coaching note inside drawer */
+.drawer-coach{
+  border-left:2px solid var(--accent);
+  padding-left:16px;
+  margin-bottom:20px;
+}
+.drawer-coach-body{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:16px;
+  line-height:1.55;
+  font-weight:400;
+  color:var(--ink);
+}
+.drawer-coach-sig{
+  font-family:var(--font-mono);
+  font-size:8px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--dim);
+  margin-top:10px;
+}
+
+.drawer-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--rule-faint);
+  border:1px solid var(--rule-faint);
+  border-radius:2px;
+  overflow:hidden;
+}
+.drawer-stat{
+  background:var(--card-elev);
+  padding:10px 12px;
+}
+.drawer-stat .d-label{
+  font-family:var(--font-mono);
+  font-size:8px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+.drawer-stat .d-val{
+  font-family:var(--font-display);
+  font-size:18px;
+  font-weight:400;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-0.01em;
+}
+.drawer-stat .d-unit{
+  font-family:var(--font-mono);
+  font-size:9px;
+  color:var(--dim);
+  margin-left:2px;
+}
+
+/* ─── SIDEBAR ─── */
+.plan-sidebar{
+  padding:48px 0 48px 40px;
+  position:sticky;
+  top:64px;
+}
+.sidebar-section{
+  margin-bottom:36px;
+  padding-bottom:32px;
+  border-bottom:1px solid var(--rule-faint);
+}
+.sidebar-section:last-child{border-bottom:none}
+.ss-label{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:14px;
+}
+
+/* Progress bar */
+.prog-bar{margin-bottom:10px}
+.pb-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.pb-name{font-family:var(--font-display);font-size:14px;font-weight:400;letter-spacing:-0.01em}
+.pb-pct{font-family:var(--font-mono);font-size:9px;color:var(--dim)}
+.pb-track-s{height:3px;background:var(--rule);border-radius:2px;overflow:hidden}
+.pb-fill{height:100%;border-radius:2px;transition:width 0.8s cubic-bezier(0.4,0,0.2,1)}
+.fill-base{background:#9B8E7A}
+.fill-build{background:var(--accent)}
+.fill-peak{background:#5A3A80}
+.fill-taper{background:#3A6080}
+
+/* TSB meter */
+.tsb-meter{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  background:rgba(122,74,40,0.04);
+  border:1px solid rgba(122,74,40,0.12);
+  border-radius:3px;
+}
+.tsb-val{
+  font-family:var(--font-display);
+  font-size:36px;
+  font-weight:300;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-0.03em;
+  line-height:1;
+  color:var(--accent);
+}
+.tsb-context{}
+.tsb-label{
+  font-family:var(--font-mono);
+  font-size:8px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:2px;
+}
+.tsb-note{font-size:12px;color:var(--muted);line-height:1.45}
+
+/* Mia sidebar note */
+.mia-sidebar{
+  background:var(--card);
+  border:1px solid var(--rule);
+  border-radius:3px;
+  overflow:hidden;
+}
+.ms-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  border-bottom:1px solid var(--rule-faint);
+  background:var(--card-elev);
+}
+.ms-avatar{
+  width:28px;height:28px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#7A4A28,#5a3a1e);
+  color:var(--paper);
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:14px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.ms-name{font-family:var(--font-display);font-size:13px;font-weight:500;letter-spacing:-0.01em}
+.ms-stamp{margin-left:auto;font-family:var(--font-mono);font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim)}
+.ms-body{padding:14px}
+.ms-lead{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:16px;
+  line-height:1.4;
+  letter-spacing:-0.01em;
+  margin-bottom:10px;
+  color:var(--ink);
+}
+.ms-text{font-size:12.5px;color:var(--muted);line-height:1.6}
+
+/* ─── CTA BAND ─── */
+.cta-band{
+  background:var(--ink);
+  color:var(--paper);
+  padding:56px 0;
+  border-top:1px solid var(--rule);
+}
+.cta-inner{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:48px;
+}
+.cta-copy h3{
+  font-family:var(--font-display);
+  font-size:36px;
+  font-weight:400;
+  letter-spacing:-0.025em;
+  line-height:1.1;
+  margin-bottom:8px;
+}
+.cta-copy h3 em{font-style:italic}
+.cta-copy p{
+  font-size:14.5px;
+  color:rgba(244,239,231,0.65);
+  line-height:1.55;
+  max-width:500px;
+}
+.cta-btns{display:flex;flex-direction:column;gap:10px;align-items:flex-end;flex-shrink:0}
+.btn-light{
+  background:var(--paper);
+  color:var(--ink);
+  padding:13px 24px;
+  font-size:13px;
+  font-weight:500;
+  text-decoration:none;
+  border-radius:2px;
+  white-space:nowrap;
+  transition:background 0.15s;
+}
+.btn-light:hover{background:#e8e2d8}
+.btn-ghost{
+  background:transparent;
+  color:rgba(244,239,231,0.65);
+  padding:13px 24px;
+  font-size:13px;
+  font-weight:400;
+  text-decoration:none;
+  border:1px solid rgba(244,239,231,0.2);
+  border-radius:2px;
+  white-space:nowrap;
+  transition:border-color 0.15s,color 0.15s;
+}
+.btn-ghost:hover{color:var(--paper);border-color:rgba(244,239,231,0.4)}
+.cta-fine{
+  font-family:var(--font-mono);
+  font-size:8px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:rgba(244,239,231,0.3);
+  text-align:right;
+  margin-top:4px;
+}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .wrap{padding:0 24px}
+  .plan-body{grid-template-columns:1fr}
+  .week-panel{padding:32px 0;border-right:none;border-bottom:1px solid var(--rule)}
+  .plan-sidebar{padding:32px 0;position:static}
+  .ph-grid{grid-template-columns:1fr;gap:24px}
+  .ph-meta{align-items:flex-start;text-align:left;flex-direction:row;gap:32px}
+  .cta-inner{grid-template-columns:1fr;gap:24px}
+  .cta-btns{align-items:flex-start}
+  .pb-track{grid-template-columns:1fr 1fr}
+  .drawer-inner{padding:16px 16px 20px 16px}
+}
+@media(max-width:640px){
+  .session-row{grid-template-columns:64px 1fr}
+  .sr-right{display:none}
+  .drawer-grid{grid-template-columns:repeat(2,1fr)}
+  .ph-title{font-size:36px}
+  .ph-meta{flex-direction:column;gap:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .session-drawer,.pb-fill{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── MASTHEAD ─── -->
+<header class="masthead">
+  <div class="wrap mh-inner">
+    <a href="koers-almanac-v2.html" class="back"><span>←</span> The Almanac</a>
+    <div class="mh-divider"></div>
+    <a href="#" class="brand">Koers</a>
+    <div class="mh-label">Sample plan · Gravel Mid-Distance · 12 weeks</div>
+    <a href="#start" class="mh-cta">Start your first month free →</a>
+  </div>
+</header>
+
+<!-- ─── PLAN HEADER ─── -->
+<div class="plan-header">
+  <div class="wrap ph-grid">
+    <div>
+      <div class="ph-eyebrow">Vol. I · Sample edition · Gravel Mid-Distance</div>
+      <h1 class="ph-title">Twelve weeks<br>to <em>Gravel Worlds.</em></h1>
+      <p class="ph-lede">"Build week one. VO2 enters the plan on Tuesday, threshold on Thursday — both at the gentle end of their bands. Don't try to be a hero this week."</p>
+    </div>
+    <div class="ph-meta">
+      <div class="ph-stat">
+        <div class="label">Target event</div>
+        <div class="val">50–149 mi gravel</div>
+      </div>
+      <div class="ph-stat">
+        <div class="label">Plan length</div>
+        <div class="val">12 weeks</div>
+      </div>
+      <div class="ph-stat">
+        <div class="label">Peak TSS</div>
+        <div class="val">~530 / wk</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PHASE TIMELINE ─── -->
+<div class="phase-bar">
+  <div class="wrap">
+    <div class="pb-label">Plan phases</div>
+    <div class="pb-track">
+      <div class="pb-phase base">
+        <div class="pb-phase-name">Base</div>
+        <div class="pb-phase-wks">Weeks 1–3 · Aerobic foundation</div>
+      </div>
+      <div class="pb-phase build active">
+        <div class="pb-phase-name">Build ←  you are here</div>
+        <div class="pb-phase-wks">Weeks 4–7 · Sustained power</div>
+      </div>
+      <div class="pb-phase peak">
+        <div class="pb-phase-name">Peak</div>
+        <div class="pb-phase-wks">Weeks 8–10 · Race specificity</div>
+      </div>
+      <div class="pb-phase taper">
+        <div class="pb-phase-name">Taper</div>
+        <div class="pb-phase-wks">Weeks 11–12</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── WEEK NAVIGATOR ─── -->
+<div class="week-nav">
+  <div class="wrap">
+    <div class="wn-inner" id="week-nav">
+      <button class="wn-week" data-week="1">W1 · Base</button>
+      <button class="wn-week" data-week="2">W2 · Base</button>
+      <button class="wn-week" data-week="3">W3 · Base</button>
+      <div class="wn-divider"></div>
+      <button class="wn-week" data-week="4">W4 · Build</button>
+      <button class="wn-week active" data-week="5">W5 · Build</button>
+      <button class="wn-week" data-week="6">W6 · Build</button>
+      <button class="wn-week deload" data-week="7">W7 · Deload</button>
+      <div class="wn-divider"></div>
+      <button class="wn-week" data-week="8">W8 · Peak</button>
+      <button class="wn-week" data-week="9">W9 · Peak</button>
+      <button class="wn-week" data-week="10">W10 · Peak</button>
+      <div class="wn-divider"></div>
+      <button class="wn-week" data-week="11">W11 · Taper</button>
+      <button class="wn-week" data-week="12">W12 · Race</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PLAN BODY ─── -->
+<div class="wrap plan-body">
+
+  <!-- SESSIONS -->
+  <div class="week-panel">
+    <div class="week-eyebrow">
+      <div class="week-num" id="week-roman">V.</div>
+      <div class="week-meta">
+        <div class="week-phase-tag" id="week-phase-tag">Build · Week 2 of 4</div>
+        <div class="week-tss" id="week-tss">Est. ~460 TSS · ~10.5 hr</div>
+      </div>
+    </div>
+
+    <div class="week-lede" id="week-lede">
+      "VO2 progresses to five by three. The Saturday long ride starts carrying tempo blocks — two twenty-minute efforts inside the ride. Thursday switches to over-unders, which is the workout that teaches you to ride rolling gravel terrain. This is where the work begins."
+    </div>
+
+    <div class="session-list" id="session-list">
+      <!-- Sessions rendered by JS -->
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="plan-sidebar">
+
+    <div class="sidebar-section">
+      <div class="ss-label">Phase progress</div>
+      <div class="prog-bar" id="prog-bars">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="ss-label">Training stress balance</div>
+      <div class="tsb-meter">
+        <div class="tsb-val" id="tsb-val">−8</div>
+        <div class="tsb-context">
+          <div class="tsb-label" id="tsb-label">Build phase · On track</div>
+          <div class="tsb-note" id="tsb-note">You're carrying productive fatigue. The deload in Week 7 lands at exactly the right moment.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="ss-label">From Mia</div>
+      <div class="mia-sidebar" id="mia-sidebar-card">
+        <div class="ms-header">
+          <div class="ms-avatar">M</div>
+          <div>
+            <div class="ms-name">Mia Vossen</div>
+          </div>
+          <div class="ms-stamp" id="mia-stamp">Sun · 8:04 PM</div>
+        </div>
+        <div class="ms-body">
+          <div class="ms-lead" id="mia-lead">"This is where the work begins."</div>
+          <div class="ms-text" id="mia-body">Five by three on Tuesday is hard. The over-unders Thursday are harder. Do both before you decide Saturday was the hard day. Fuel from the first hour — don't wait for the feeling.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="ss-label">This plan is for</div>
+      <div style="font-size:13.5px;color:var(--muted);line-height:1.65">
+        Riders targeting 50–149 mi gravel events. Assumes a power meter and 8–12 hours per week available. FTP declared at plan setup — all watt targets scale to your number.
+      </div>
+      <div style="margin-top:12px">
+        <a href="#start" style="font-size:12.5px;color:var(--accent);font-weight:500;text-decoration:none">Get the full plan free →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── CTA BAND ─── -->
+<section class="cta-band" id="start">
+  <div class="wrap cta-inner">
+    <div class="cta-copy">
+      <h3>Your plan arrives<br><em>Sunday night.</em></h3>
+      <p>Real sessions, real watt targets, a note from Mia explaining the week. First month free — no card, no onboarding drip, no streak counter.</p>
+    </div>
+    <div class="cta-btns">
+      <a href="#" class="btn-light">Start your first month free →</a>
+      <a href="koers-almanac-v2.html" class="btn-ghost">Back to the Almanac</a>
+      <div class="cta-fine">No credit card · Cancel anytime</div>
+    </div>
+  </div>
+</section>
+
+<script>
+// ─── PLAN DATA ────────────────────────────────────────────────────
+const romans = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+
+const weeks = {
+  1:{phase:'Base · Week 1 of 3',tss:'~285 TSS · ~7 hr',tsb:'+2',tsbLabel:'Fresh start',tsbNote:'Week 1 — the numbers mean less than the habits.',miaLead:'"Build the habit before the volume."',miabody:'Tempo Tuesday, sweet spot Thursday — both at the conservative end of the band. Hold the same wattage across all intervals. If the third drops, you started too high.',miaStamp:'Sun · 8:04 PM',
+  lede:'"Base week one. The work that matters here is the long ride — let it grow at its own pace, don\'t push the duration. Tempo on Tuesday, sweet spot on Thursday, both at conservative numbers. Build the habit before the volume."',
+  sessions:[
+    {day:'Mon',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Tue',type:'Tempo intervals',detail:'3×10 min @ 80–85% FTP, 5 min Z1 rest',zone:'z3',dur:'75 min',coach:'"Three by ten at 80–85%. Hold the same wattage across all three; if the third drops, you started too high."'},
+    {day:'Wed',type:'Endurance',detail:'Steady Z2, cadence above 85 RPM',zone:'z2',dur:'75 min',coach:'"Seventy-five minutes in Z2. Cadence above 85. The day between the two harder days — keep it light."'},
+    {day:'Thu',type:'Sweet spot',detail:'2×12 min @ 88–94% FTP, 5 min Z1 rest',zone:'zss',dur:'75 min',coach:'"Two by twelve at 88–94%. The interval should feel hard but you should never be gasping. If the second drops more than five watts off the first, ease back next time."'},
+    {day:'Fri',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Sat',type:'Long ride',detail:'Steady Z2 progressive, build naturally',zone:'z2',dur:'2 hr',coach:'"Two hours, progressive Z2. Start at the bottom of the band and let it climb naturally. Duration is the goal, not watts."'},
+    {day:'Sun',type:'Endurance',detail:'Low end of Z2',zone:'z2',dur:'75 min',coach:'"Seventy-five easy. Low end of Z2. If the legs feel heavy after yesterday, ride flat — don\'t fight terrain."'},
+  ]},
+
+  4:{phase:'Build · Week 1 of 4',tss:'~390 TSS · ~9 hr',tsb:'-3',tsbLabel:'Build phase · Productive load',tsbNote:'Build begins — slight fatigue accumulation is expected and correct here.',miaLead:'"Don\'t try to be a hero this week."',miabody:'VO2 and threshold both appear for the first time. Both at the gentle end of their bands. The week is about introduction, not heroics — you have three more build weeks to push.',miaStamp:'Sun · 8:04 PM',
+  lede:'"Build begins. VO2 enters the plan on Tuesday, threshold on Thursday — both at the gentle end of their bands. The long ride holds at three and a half while the intensity finds its feet. Don\'t try to be a hero this week."',
+  sessions:[
+    {day:'Mon',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Tue',type:'VO2 intervals',detail:'4×3 min @ 108–113% FTP, full recovery',zone:'z5',dur:'65 min',coach:'"Four by three at 108–113%. Hard but not all-out. If you can\'t hold the wattage in the fourth interval, end the set there — you got the stimulus."'},
+    {day:'Wed',type:'Endurance',detail:'Steady Z2, recovery between VO2 and threshold',zone:'z2',dur:'75 min',coach:'"Seventy-five in Z2. Recovery between VO2 and threshold."'},
+    {day:'Thu',type:'Threshold',detail:'2×15 min @ 95–102% FTP, 5 min Z1 rest',zone:'z4',dur:'80 min',coach:'"Two by fifteen at 95–102%. The intervals should feel like the hardest sustainable pace you can hold for the full duration."'},
+    {day:'Fri',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Sat',type:'Long ride',detail:'Steady Z2 — no tempo blocks this week',zone:'z2',dur:'3.5 hr',coach:'"Three and a half hours, steady Z2. No tempo blocks this week — let the legs absorb the new intensity work."'},
+    {day:'Sun',type:'Endurance',detail:'Low Z2 — first week of real fatigue carryover',zone:'z2',dur:'90 min',coach:'"Ninety in low Z2. The first week of real fatigue carryover."'},
+  ]},
+
+  5:{phase:'Build · Week 2 of 4',tss:'~460 TSS · ~10.5 hr',tsb:'-8',tsbLabel:'Build phase · On track',tsbNote:'You\'re carrying productive fatigue. The deload in Week 7 lands at exactly the right moment.',miaLead:'"This is where the work begins."',miabody:'Five by three on Tuesday is hard. The over-unders Thursday are harder. Do both before you decide Saturday was the hard day. Fuel from the first hour — don\'t wait for the feeling.',miaStamp:'Sun · 8:04 PM',
+  lede:'"VO2 progresses to five by three. The Saturday long ride starts carrying tempo blocks — two twenty-minute efforts inside the ride. Thursday switches to over-unders, which is the workout that teaches you to ride rolling gravel terrain. This is where the work begins."',
+  sessions:[
+    {day:'Mon',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Tue',type:'VO2 intervals',detail:'5×3 min @ 110–115% FTP, full recovery',zone:'z5',dur:'70 min',coach:'"Five by three at 110–115%. By the fourth interval you should be questioning your life choices. That\'s the right place."'},
+    {day:'Wed',type:'Endurance',detail:'Steady Z2, cadence high',zone:'z2',dur:'75 min',coach:'"Seventy-five in Z2. Cadence high."'},
+    {day:'Thu',type:'Over-unders',detail:'8×(1 min @ 102–105% / 1 min @ 92–95%), no rest',zone:'z4',dur:'75 min',coach:'"Eight by one minute over at 102–105%, one minute under at 92–95%, no rest between them. The unders are not recovery — keep the pressure on the pedals. This is the rolling-terrain workout."'},
+    {day:'Fri',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Sat',type:'Long ride + tempo blocks',detail:'4 hr total · 2×20 min tempo in hr 2 and hr 3',zone:'z3',dur:'4 hr',coach:'"Four hours total. Two twenty-minute tempo efforts inside — one in hour two, one in hour three. The point is to ride strong inside a long day, not just to finish one."'},
+    {day:'Sun',type:'Endurance',detail:'Low Z2 — heavy legs expected',zone:'z2',dur:'90 min',coach:'"Ninety low Z2. Heavy legs from yesterday — ride them flat."'},
+  ]},
+
+  6:{phase:'Build · Week 3 of 4 · Peak Build',tss:'~530 TSS · ~12 hr',tsb:'-14',tsbLabel:'Build phase · High load',tsbNote:'Hardest build week. Deload is one week away — get through this.',miaLead:'"Deload comes next week. Get through this one."',miabody:'VO2 lengthens to 5×4 at slightly lower watts. Over-unders go to ten reps with low cadence — 60–70 RPM through the work. Long ride hits 4.5 hours with 25-minute tempo blocks.',miaStamp:'Sun · 8:04 PM',
+  lede:'"Hardest build week. VO2 lengthens to five by four. Thursday\'s over-unders go to ten reps and add low cadence — sixty to seventy RPM through the work. Long ride hits four and a half with two twenty-five-minute tempo blocks. Deload comes next week — get through this one."',
+  sessions:[
+    {day:'Mon',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Tue',type:'VO2 intervals',detail:'5×4 min @ 108–113% FTP, cadence above 90',zone:'z5',dur:'75 min',coach:'"Five by four at 108–113%. Longer intervals at slightly lower watts. Cadence stays above 90 even when it hurts."'},
+    {day:'Wed',type:'Endurance',detail:'Steady Z2',zone:'z2',dur:'75 min',coach:'"Seventy-five in Z2."'},
+    {day:'Thu',type:'Over-unders · low cadence',detail:'10×over-under, 60–70 RPM throughout',zone:'z4',dur:'80 min',coach:'"Ten reps over-under, sixty to seventy RPM throughout. The low cadence builds the strength to push pedals at the end of a long day. If you can\'t maintain the wattage at low cadence, finish the set spinning normally."'},
+    {day:'Fri',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Sat',type:'Long ride + tempo blocks',detail:'4.5 hr total · 2×25 min tempo in hr 2 and hr 3',zone:'z3',dur:'4.5 hr',coach:'"Four and a half hours. Two twenty-five-minute tempo blocks — one in hour two, one in hour three. Fuel for the last hour, not the first."'},
+    {day:'Sun',type:'Endurance',detail:'Low Z2 — the hardest 60 min is the last 60',zone:'z2',dur:'90 min',coach:'"Ninety in low Z2. The hardest sixty minutes is the last sixty."'},
+  ]},
+
+  7:{phase:'Build · Week 4 of 4 · Deload',tss:'~280 TSS · ~6.5 hr',tsb:'+4',tsbLabel:'Deload week · Recovery',tsbNote:'Volume drops by a third. You should feel light by Friday. If you don\'t, message Mia before Saturday.',miaLead:'"Resist the urge to add."',miabody:'One short VO2 session keeps the stimulus alive. Thursday becomes endurance. Saturday is two and a half easy hours. The deload is the workout.',miaStamp:'Sun · 8:04 PM',
+  lede:'"Deload. Volume drops by a third, intensity by more. Tuesday holds one short VO2 session to keep the stimulus alive; Thursday becomes endurance. Saturday is two and a half easy hours. You should feel light by Friday. If you don\'t, talk to me."',
+  sessions:[
+    {day:'Mon',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Tue',type:'Short VO2 (stimulus only)',detail:'3×3 min @ 108–113% FTP · maintenance only',zone:'z5',dur:'60 min',coach:'"Three by three at 108–113%. One round of stimulus, then sixty minutes total. Maintenance, not progression."'},
+    {day:'Wed',type:'Endurance',detail:'Easy Z2',zone:'z2',dur:'60 min',coach:'"Sixty in Z2. Easy."'},
+    {day:'Thu',type:'Endurance (replaces intervals)',detail:'Low Z2 — no intervals this week',zone:'z2',dur:'60 min',coach:'"Sixty in low Z2. No intervals this week. The legs absorb the last three weeks."'},
+    {day:'Fri',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Sat',type:'Long ride (reduced)',detail:'Steady Z2 — half the workout of last Saturday',zone:'z2',dur:'2.5 hr',coach:'"Two and a half hours in Z2. Half the workout of last Saturday. Resist the urge to add."'},
+    {day:'Sun',type:'Endurance',detail:'Low Z2 — end fresh',zone:'z2',dur:'60 min',coach:'"Sixty in low Z2. End the week feeling fresh."'},
+  ]},
+
+  9:{phase:'Peak · Week 2 of 3 · Peak load',tss:'~520 TSS · ~11.5 hr',tsb:'-12',tsbLabel:'Peak phase · Highest load',tsbNote:'Hardest week of the plan. Race-pace block grows to 90 min Saturday. Message Mia before Saturday if you feel wrecked midweek.',miaLead:'"The second interval is the test."',miabody:'Two by twenty at threshold. The Saturday race-pace block grows to 90 minutes — the longest race-effort segment in the plan. This is the simulation ride. Practice everything.',miaStamp:'Sun · 8:04 PM',
+  lede:'"Hardest week of the plan. Threshold stretches to two by twenty. Saturday\'s race-pace block grows to ninety minutes — the longest race-effort segment we ask of you. If something gives this week, the adaptation engine catches it; if you feel wrecked midweek, message me before Saturday."',
+  sessions:[
+    {day:'Mon',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Tue',type:'Threshold',detail:'2×20 min @ 95–102% FTP',zone:'z4',dur:'80 min',coach:'"Two by twenty at 95–102%. Longer intervals than last week. Pace yourself — the second interval is the test."'},
+    {day:'Wed',type:'Endurance',detail:'Steady Z2',zone:'z2',dur:'75 min',coach:'"Seventy-five in Z2."'},
+    {day:'Thu',type:'Short VO2 (sharpening)',detail:'4×3 min @ 110–115% FTP',zone:'z5',dur:'65 min',coach:'"Four by three at 110–115%. Same as last week."'},
+    {day:'Fri',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Sat',type:'Long ride · race-pace finish',detail:'4.5 hr total · 3 hr Z2 + 90 min @ 80–88%',zone:'z4',dur:'4.5 hr',coach:'"Four and a half hours. Three of Z2, then ninety minutes at 80–88%. This is the simulation ride. Fueling, pacing, mental state — practice all of it."'},
+    {day:'Sun',type:'Endurance',detail:'Low Z2 — fatigue carryover',zone:'z2',dur:'90 min',coach:'"Ninety in low Z2. Fatigue carryover."'},
+  ]},
+
+  12:{phase:'Race week',tss:'~180 TSS · ~5 hr + race',tsb:'+8',tsbLabel:'Race week · Freshness',tsbNote:'The fitness is built. What happens now is protection, not addition.',miaLead:'"Don\'t add anything."',miabody:'Two short openers, one tempo, a 45-minute spin Friday. The work is already done. Eat enough this week — race-week appetite drops and it shouldn\'t.',miaStamp:'Sun · 8:04 PM',
+  lede:'"Race week. Two short openers, one tempo session, a forty-five-minute spin Friday with a few openers if you want them. Don\'t add anything else. The work is already done. Eat enough this week — race-week appetite drops and it shouldn\'t."',
+  sessions:[
+    {day:'Mon',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+    {day:'Tue',type:'Openers',detail:'3×2 min @ 110–115% FTP · 45 min total',zone:'z5',dur:'45 min',coach:'"Three by two at 110–115%. Forty-five minutes total. Wake the legs up, don\'t tire them out."'},
+    {day:'Wed',type:'Easy endurance',detail:'Conversational — legs should feel better at the end',zone:'z2',dur:'60 min',coach:'"Sixty minutes in low Z2. Conversational. The legs should feel better at the end than the start."'},
+    {day:'Thu',type:'Short tempo',detail:'2×8 min @ 80–85% — last reminder of sustained work',zone:'z3',dur:'55 min',coach:'"Two by eight at 80–85%. Last reminder of what sustained work feels like."'},
+    {day:'Fri',type:'Day-before openers',detail:'45 min easy + 4–6 full-effort sprints × 45–60 sec',zone:'z2',dur:'45 min',coach:'"Forty-five-minute easy spin with four to six full-effort sprints of forty-five to sixty seconds. Your call on how many — four is enough, six is fine. Full recovery between each."'},
+    {day:'Sat',type:'RACE DAY',detail:'Gravel Worlds · Opening 30 min under target · settle by first feed',zone:'z4',dur:'Event',coach:'"Today is what we\'ve been working toward. Stick to the plan: opening thirty minutes under target, settle into the band by the first feed, hold position through the second hour. The legs are there. Go ride your race."'},
+    {day:'Sun',type:'Easy recovery (optional)',detail:'30–45 min Z1 if legs are restless',zone:'z2',dur:'30–45 min',coach:'"Thirty to forty-five minutes, Z1, optional. If the legs feel beat up, take the day. If they feel restless, spin them out flat."'},
+  ]},
+};
+
+// Fill in missing weeks with stubs that redirect
+for(let i=1;i<=12;i++){
+  if(!weeks[i]){
+    weeks[i]={
+      phase: i<=3?`Base · Week ${i} of 3`:i<=7?`Build · Week ${i-3} of 4`:i<=10?`Peak · Week ${i-7} of 3`:`Taper · Week ${i-10} of 2`,
+      tss:'See full plan',tsb:'—',
+      tsbLabel:'Full plan in Koers',
+      tsbNote:'Sign up for the full 12-week plan with all sessions and Mia\'s notes.',
+      miaLead:'"The full plan is waiting."',
+      miabody:'This week\'s sessions, Mia\'s notes, and watt targets at your FTP are all inside Koers. First month is free.',
+      miaStamp:'Sun · 8:04 PM',
+      lede: '"Get the full plan inside Koers — all twelve weeks, every session, Mia\'s coaching notes, and watt targets scaled to your FTP."',
+      sessions:[
+        {day:'Mon',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+        {day:'Tue',type:'Full session in Koers',detail:'Sign up to see the complete plan',zone:'z4',dur:'—',coach:'"The full plan is inside Koers. First month is free."'},
+        {day:'Wed',type:'Full session in Koers',detail:'Sign up to see the complete plan',zone:'z2',dur:'—',coach:''},
+        {day:'Thu',type:'Full session in Koers',detail:'Sign up to see the complete plan',zone:'z4',dur:'—',coach:''},
+        {day:'Fri',type:'Rest',detail:'',zone:'zrest',dur:'',coach:''},
+        {day:'Sat',type:'Full session in Koers',detail:'Sign up to see the complete plan',zone:'z2',dur:'—',coach:''},
+        {day:'Sun',type:'Full session in Koers',detail:'Sign up to see the complete plan',zone:'z2',dur:'—',coach:''},
+      ]
+    };
+  }
+}
+
+// ─── PROGRESS BARS ────────────────────────────────────────────────
+const phaseProgress = {
+  1:{base:33,build:0,peak:0,taper:0},
+  2:{base:67,build:0,peak:0,taper:0},
+  3:{base:100,build:0,peak:0,taper:0},
+  4:{base:100,build:25,peak:0,taper:0},
+  5:{base:100,build:50,peak:0,taper:0},
+  6:{base:100,build:75,peak:0,taper:0},
+  7:{base:100,build:100,peak:0,taper:0},
+  8:{base:100,build:100,peak:33,taper:0},
+  9:{base:100,build:100,peak:67,taper:0},
+  10:{base:100,build:100,peak:100,taper:0},
+  11:{base:100,build:100,peak:100,taper:50},
+  12:{base:100,build:100,peak:100,taper:100},
+};
+
+function renderProgressBars(weekNum){
+  const p = phaseProgress[weekNum];
+  const bars = [
+    {name:'Base',fill:'fill-base',pct:p.base},
+    {name:'Build',fill:'fill-build',pct:p.build},
+    {name:'Peak',fill:'fill-peak',pct:p.peak},
+    {name:'Taper',fill:'fill-taper',pct:p.taper},
+  ];
+  document.getElementById('prog-bars').innerHTML = bars.map(b=>`
+    <div class="prog-bar" style="margin-bottom:10px">
+      <div class="pb-row">
+        <span class="pb-name">${b.name}</span>
+        <span class="pb-pct">${b.pct}%</span>
+      </div>
+      <div class="pb-track-s"><div class="pb-fill ${b.fill}" style="width:${b.pct}%"></div></div>
+    </div>`).join('');
+}
+
+// ─── SESSION RENDERING ────────────────────────────────────────────
+const zoneLabel = {z2:'Z2',z3:'Z3',z4:'Z4',z5:'Z5',zss:'SS',zrest:'Rest'};
+
+function renderSessions(weekNum){
+  const w = weeks[weekNum];
+  document.getElementById('week-roman').textContent = romans[weekNum-1]+'.';
+  document.getElementById('week-phase-tag').textContent = w.phase;
+  document.getElementById('week-tss').textContent = `Est. ${w.tss}`;
+  document.getElementById('week-lede').textContent = w.lede;
+  document.getElementById('tsb-val').textContent = w.tsb;
+  document.getElementById('tsb-label').textContent = w.tsbLabel;
+  document.getElementById('tsb-note').textContent = w.tsbNote;
+  document.getElementById('mia-lead').textContent = w.miaLead;
+  document.getElementById('mia-body').textContent = w.miabody;
+  document.getElementById('mia-stamp').textContent = w.miaStamp;
+
+  const list = document.getElementById('session-list');
+  list.innerHTML = w.sessions.map((s,i)=>{
+    const isRest = s.zone==='zrest';
+    const hasCoach = s.coach && s.coach.length>0 && !isRest;
+    return `
+      <div class="session-row ${isRest?'rest-day':''}" data-idx="${i}" ${hasCoach?'tabindex="0"':''}>
+        <div class="sr-day">${s.day}</div>
+        <div class="sr-content">
+          <div class="sr-type">${s.type}</div>
+          ${s.detail?`<div class="sr-detail">${s.detail}</div>`:''}
+        </div>
+        <div class="sr-right">
+          <span class="zone-badge ${s.zone}">${zoneLabel[s.zone]}</span>
+          ${s.dur?`<span class="sr-dur">${s.dur}</span>`:''}
+        </div>
+        ${hasCoach?'<span class="sr-chevron">›</span>':''}
+      </div>
+      ${hasCoach?`<div class="session-drawer" id="drawer-${i}">
+        <div class="drawer-inner">
+          <div class="drawer-coach">
+            <div class="drawer-coach-body">${s.coach}</div>
+            <div class="drawer-coach-sig">— Mia Vossen</div>
+          </div>
+          ${s.dur && !isRest?`<div class="drawer-grid">
+            <div class="drawer-stat"><div class="d-label">Duration</div><div class="d-val">${s.dur}</div></div>
+            <div class="drawer-stat"><div class="d-label">Zone</div><div class="d-val">${zoneLabel[s.zone]}</div></div>
+            <div class="drawer-stat"><div class="d-label">Day</div><div class="d-val">${s.day}</div></div>
+          </div>`:''}
+        </div>
+      </div>`:''}
+    `;
+  }).join('');
+
+  // Wire up row clicks
+  list.querySelectorAll('.session-row:not(.rest-day)').forEach(row=>{
+    row.addEventListener('click',()=>{
+      const idx = row.dataset.idx;
+      const drawer = document.getElementById('drawer-'+idx);
+      if(!drawer) return;
+      const isOpen = drawer.classList.contains('open');
+      // Close all
+      list.querySelectorAll('.session-drawer').forEach(d=>d.classList.remove('open'));
+      list.querySelectorAll('.session-row').forEach(r=>r.classList.remove('expanded'));
+      if(!isOpen){
+        drawer.classList.add('open');
+        row.classList.add('expanded');
+      }
+    });
+    row.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();row.click();}});
+  });
+
+  renderProgressBars(weekNum);
+}
+
+// ─── WEEK NAV ─────────────────────────────────────────────────────
+let activeWeek = 5;
+function setWeek(n){
+  activeWeek = n;
+  document.querySelectorAll('.wn-week').forEach(b=>{
+    b.classList.toggle('active', parseInt(b.dataset.week)===n);
+  });
+  renderSessions(n);
+}
+
+document.getElementById('week-nav').addEventListener('click',e=>{
+  const btn = e.target.closest('.wn-week');
+  if(btn) setWeek(parseInt(btn.dataset.week));
+});
+
+// ─── INIT ──────────────────────────────────────────────────────────
+renderSessions(5);
+</script>
+</body>
+</html>
