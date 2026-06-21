@@ -652,11 +652,11 @@ body{
 <!-- ─── MASTHEAD ─── -->
 <header class="masthead">
   <div class="wrap mh-inner">
-    <a href="koers-almanac-v2.html" class="back"><span>←</span> The Almanac</a>
+    <a href="/index.html" class="back"><span>←</span> The Almanac</a>
     <div class="mh-divider"></div>
     <a href="#" class="brand">Koers</a>
     <div class="mh-label">Sample plan · Gravel Mid-Distance · 12 weeks</div>
-    <a href="#start" class="mh-cta">Start your first month free →</a>
+    <a href="/beta.html" data-koers-cta class="mh-cta">Request beta access →</a>
   </div>
 </header>
 
@@ -799,7 +799,7 @@ body{
         Riders targeting 50–149 mi gravel events. Assumes a power meter and 8–12 hours per week available. FTP declared at plan setup — all watt targets scale to your number.
       </div>
       <div style="margin-top:12px">
-        <a href="#start" style="font-size:12.5px;color:var(--accent);font-weight:500;text-decoration:none">Get the full plan free →</a>
+        <a href="/beta.html" data-koers-cta style="font-size:12.5px;color:var(--accent);font-weight:500;text-decoration:none">Request beta access →</a>
       </div>
     </div>
 
@@ -814,8 +814,8 @@ body{
       <p>Real sessions, real watt targets, a note from Mia explaining the week. First month free — no card, no onboarding drip, no streak counter.</p>
     </div>
     <div class="cta-btns">
-      <a href="#" class="btn-light">Start your first month free →</a>
-      <a href="koers-almanac-v2.html" class="btn-ghost">Back to the Almanac</a>
+      <a href="/beta.html" data-koers-cta class="btn-light">Request beta access →</a>
+      <a href="/index.html" class="btn-ghost">Back to the Almanac</a>
       <div class="cta-fine">No credit card · Cancel anytime</div>
     </div>
   </div>
@@ -1058,5 +1058,7 @@ document.getElementById('week-nav').addEventListener('click',e=>{
 // ─── INIT ──────────────────────────────────────────────────────────
 renderSessions(5);
 </script>
+<script src="/koers-config.js"></script>
+<script src="/koers-site.js"></script>
 </body>
 </html>

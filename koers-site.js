@@ -41,6 +41,7 @@
   const path = window.location.pathname;
   const pageMap = {
     '/plan.html':    'plan',
+    '/letter.html':  'letter',
     '/guide.html':   'guide',
     '/pricing.html': 'pricing',
     '/beta.html':    'beta',

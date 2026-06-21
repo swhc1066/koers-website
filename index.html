@@ -267,9 +267,8 @@ nav a:hover{color:var(--accent)}
   letter-spacing:-0.01em;
   font-weight:400;
   line-height:1.25;
-  transition:color 0.15s;
 }
-.toc-item:hover .title{color:var(--accent)}
+.toc-item:hover .title{font-style:italic;color:var(--accent)}
 
 /* ─── CHAPTER FRAME ─────────────────────────────── */
 .chapter{
@@ -1058,10 +1057,11 @@ footer{
     <div class="byline">Vol. I · No. 01 · The Almanac</div>
     <nav>
       <a href="#sunday">Sunday</a>
+      <a href="/plan.html" data-koers-nav="plan">Sample plan</a>
       <a href="#tuesday">Tuesday</a>
       <a href="#wednesday">Wednesday</a>
       <a href="#method">The method</a>
-      <a href="#start" class="btn-nav">Start free</a>
+      <a href="/beta.html" data-koers-cta class="btn-nav">Beta access</a>
     </nav>
   </div>
 </header>
@@ -1076,7 +1076,7 @@ footer{
     <div class="cover-foot">
       <p class="cover-lede">Koers is structured training that explains itself. A plan arrives Sunday night, written in full sentences. It edits itself around your week. It never adds an exclamation point.</p>
       <div class="cover-cta-row">
-        <a href="#start" class="btn-primary">Start your first month free →</a>
+        <a href="/beta.html" data-koers-cta class="btn-primary">Request beta access →</a>
         <a href="#sunday" class="btn-secondary">Read how it works</a>
       </div>
       <div class="cover-meta">
@@ -1096,7 +1096,7 @@ footer{
     </div>
   </div>
   <figure class="cover-right">
-    <img src="images/koers-hero.webp" alt="Cyclist at dawn">
+    <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1400&q=80&auto=format&fit=crop" alt="Cyclist at dawn">
     <div class="cover-caption">
       <div class="label">Cover · Vol. I, No. 01</div>
       <em>"Don't race the first one. The point is the fifth." — Mia, on intervals.</em>
@@ -1125,7 +1125,7 @@ footer{
         <span class="num">IV. — The method</span>
         <span class="title">Why fatigue, not streaks</span>
       </a>
-      <a class="toc-item" href="#start">
+      <a class="toc-item" href="/beta.html">
         <span class="num">V. — Begin</span>
         <span class="title">Your first Sunday note</span>
       </a>
@@ -1486,8 +1486,8 @@ footer{
       <h2>Your first<br>plan, <em>Sunday.</em></h2>
       <p>The first month is free. No card, no streaks, no notifications. Just a paragraph from Mia, every Sunday night, until you don't want it.</p>
       <div class="cta-row">
-        <a href="#start" class="btn-primary">Start your first month free →</a>
-        <a href="#" class="btn-secondary">Read a sample plan</a>
+        <a href="/beta.html" data-koers-cta class="btn-primary">Request beta access →</a>
+        <a href="/plan.html" class="btn-secondary">Read a sample plan</a>
       </div>
       <div class="fine">No credit card · Cancel anytime · No email drip</div>
     </div>
@@ -1509,7 +1509,7 @@ footer{
       <div class="footer-meta">Vol. I · No. 01 · Set in Fraunces &amp; Geist · 2026 · Lintel Studio</div>
     </div>
     <div class="footer-links">
-      <a href="#">The Field Guide</a>
+      <a href="/letter.html">From the founder</a>
       <a href="#">For coaches</a>
       <a href="#">Press</a>
       <a href="#">Contact</a>
@@ -1658,5 +1658,7 @@ const tocObserver = new IntersectionObserver((entries) => {
 
 sectionEls.forEach(el => { if (el) tocObserver.observe(el); });
 </script>
+<script src="/koers-config.js"></script>
+<script src="/koers-site.js"></script>
 </body>
 </html>

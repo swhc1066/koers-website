@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why I built Mia — Koers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1A1A18;
+  --paper:#F4EFE7;
+  --paper-deep:#EDE6D8;
+  --card:#FBF8F2;
+  --card-elev:#FFFFFF;
+  --rule:#D9D2C2;
+  --rule-faint:#E3DCCB;
+  --muted:#6B6355;
+  --dim:#978E7D;
+  --faint:#B8AE9B;
+  --accent:#7A4A28;
+  --font-display:'Fraunces',Georgia,serif;
+  --font-body:'Geist',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --font-mono:'Geist Mono',ui-monospace,Menlo,monospace;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 40px}
+.wrap-narrow{max-width:700px;margin:0 auto;padding:0 40px}
+
+/* ─── MASTHEAD ─── */
+.masthead{
+  border-bottom:1px solid var(--rule);
+  padding:16px 0;
+  background:var(--paper);
+  position:sticky;top:0;z-index:50;
+}
+.mh-inner{display:flex;align-items:center;gap:24px}
+.brand{font-family:var(--font-display);font-style:italic;font-size:24px;font-weight:400;text-decoration:none;color:var(--ink);flex-shrink:0}
+.mh-divider{width:1px;height:20px;background:var(--rule);flex-shrink:0}
+.mh-byline{font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);flex:1}
+nav{display:flex;gap:24px;align-items:center}
+nav a{font-size:13px;color:var(--ink);text-decoration:none;font-weight:500;white-space:nowrap}
+nav a:hover{color:var(--accent)}
+.btn-nav{padding:8px 16px;border:1px solid var(--ink);border-radius:2px;font-size:12px;letter-spacing:0.02em;font-weight:500}
+.btn-nav:hover{background:var(--ink);color:var(--paper) !important}
+
+/* ─── LETTER OPENING ─── */
+.letter-open{padding:80px 0 64px;border-bottom:1px solid var(--rule)}
+.stamp{
+  display:flex;gap:16px;align-items:center;
+  font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:48px;
+}
+.stamp-line{flex:1;height:1px;background:var(--rule)}
+.salutation{font-family:var(--font-display);font-style:italic;font-size:22px;font-weight:400;color:var(--ink);margin-bottom:28px;letter-spacing:-0.005em}
+.letter-open h1{
+  font-family:var(--font-display);font-weight:300;
+  font-size:clamp(52px,7vw,100px);
+  line-height:0.97;letter-spacing:-0.035em;
+  margin-bottom:48px;max-width:880px;
+}
+.letter-open h1 em{font-style:italic;font-weight:400}
+.letter-lede{
+  font-family:var(--font-display);font-style:italic;font-size:22px;line-height:1.5;
+  font-weight:400;max-width:640px;
+  border-left:2px solid var(--accent);padding-left:20px;
+  margin-bottom:48px;
+}
+.letter-lede strong{font-style:normal;font-weight:500}
+
+/* Founder card */
+.founder-card{
+  display:flex;gap:18px;align-items:center;
+  background:var(--card);border:1px solid var(--rule);
+  padding:24px 28px;max-width:520px;border-radius:2px;
+}
+.avatar-lg{
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,#7A4A28,#5a3a1e);
+  color:var(--paper);font-family:var(--font-display);
+  font-style:italic;font-size:28px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:400;flex-shrink:0;
+}
+.founder-card .who{font-family:var(--font-display);font-size:20px;font-weight:500;letter-spacing:-0.01em}
+.founder-card .role{font-family:var(--font-mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.founder-card .sig{font-family:var(--font-display);font-style:italic;font-size:14px;color:var(--accent);margin-top:6px}
+
+/* ─── LETTER BODY ─── */
+.letter-body{padding:80px 0}
+.letter-body p{
+  font-family:var(--font-display);font-size:20px;
+  line-height:1.65;font-weight:400;color:var(--ink);
+  margin-bottom:24px;
+}
+.letter-body p em{font-style:italic}
+.letter-body p strong{font-weight:500}
+.letter-body .first-p::first-letter{
+  font-family:var(--font-display);font-style:italic;
+  float:left;font-size:88px;line-height:0.85;
+  padding-top:6px;padding-right:14px;
+  color:var(--accent);font-weight:400;
+}
+
+/* ─── PHOTOS ─── */
+.photos{
+  padding:56px 0;
+  background:var(--paper-deep);
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+}
+.photo-row{display:grid;grid-template-columns:2fr 1fr 1.5fr;gap:12px;height:360px}
+.photo-row figure{background:#1a1a18;overflow:hidden;position:relative;border-radius:2px}
+.photo-row img{width:100%;height:100%;object-fit:cover;filter:saturate(0.6) contrast(1.06)}
+.photo-row figcaption{
+  position:absolute;bottom:14px;left:14px;right:14px;
+  color:var(--paper);
+  font-family:var(--font-mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;
+  line-height:1.6;
+}
+.photo-row figcaption em{
+  display:block;font-family:var(--font-display);font-style:italic;
+  font-size:14px;text-transform:none;letter-spacing:-0.005em;margin-top:4px;
+}
+
+/* ─── CHAPTER BREAKS ─── */
+.chapter-break{
+  padding:64px 0;text-align:center;
+  border-top:1px solid var(--rule);
+}
+.chapter-break .num{
+  font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:16px;
+}
+.chapter-break h2{
+  font-family:var(--font-display);font-style:italic;
+  font-size:clamp(34px,5vw,60px);line-height:1.05;
+  letter-spacing:-0.025em;font-weight:400;
+  max-width:740px;margin:0 auto;
+}
+.chapter-break h2 em{font-style:normal;color:var(--accent)}
+.ornament{font-family:var(--font-display);font-style:italic;font-size:24px;color:var(--accent);margin-top:16px}
+
+/* ─── SECTION BASE ─── */
+.sect{padding:72px 0;border-top:1px solid var(--rule)}
+.sect.alt{background:var(--paper-deep)}
+.sect h3{
+  font-family:var(--font-display);font-style:italic;
+  font-size:clamp(32px,4vw,48px);line-height:1.05;
+  letter-spacing:-0.025em;font-weight:400;margin-bottom:14px;
+}
+.sect-intro{font-size:16px;color:var(--muted);max-width:540px;margin-bottom:48px;line-height:1.65}
+
+/* ─── CHAPTER I — SUNDAYS ─── */
+.list-items{border-top:1px solid var(--ink)}
+.list-item{
+  display:grid;grid-template-columns:56px 1fr 1fr;gap:32px;
+  padding:28px 0;border-bottom:1px solid var(--rule);align-items:baseline;
+}
+.list-item .ix{
+  font-family:var(--font-display);font-style:italic;
+  font-size:32px;color:var(--accent);font-weight:400;line-height:1;
+}
+.list-item .ht{
+  font-family:var(--font-display);font-size:22px;
+  letter-spacing:-0.015em;font-weight:400;line-height:1.25;
+}
+.list-item .ht em{font-style:italic}
+.list-item .hd{font-size:14px;color:var(--muted);line-height:1.65}
+.list-item .hd em{
+  font-style:italic;color:var(--ink);
+  font-family:var(--font-display);font-size:15px;
+}
+
+/* ─── CHAPTER II — COACH MODE ─── */
+.coach-body p{
+  font-family:var(--font-display);font-size:19px;
+  line-height:1.6;margin-bottom:22px;max-width:640px;
+}
+.coach-body p em{font-style:italic}
+.note-spread{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px}
+.coach-bubble{
+  background:var(--card);border:1px solid var(--rule);
+  padding:24px 26px;border-radius:2px;
+}
+.coach-bubble.rider{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.coach-bubble .tag{
+  font-family:var(--font-mono);font-size:9px;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:14px;display:flex;justify-content:space-between;
+}
+.coach-bubble.rider .tag{color:rgba(244,239,231,0.45)}
+.coach-bubble .q{
+  font-family:var(--font-display);font-style:italic;
+  font-size:20px;line-height:1.4;letter-spacing:-0.01em;margin-bottom:12px;
+}
+.coach-bubble .b{font-size:13.5px;line-height:1.6;color:var(--muted)}
+.coach-bubble.rider .b{color:rgba(244,239,231,0.65)}
+
+/* ─── CHAPTER III — FIRST MONTH ─── */
+.steps{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+}
+.step{padding:32px 24px;border-right:1px solid var(--rule)}
+.step:last-child{border-right:none}
+.step .ix{
+  font-family:var(--font-display);font-style:italic;
+  font-size:44px;color:var(--accent);line-height:1;
+  margin-bottom:16px;font-weight:400;
+}
+.step h4{
+  font-family:var(--font-display);font-size:22px;
+  line-height:1.2;letter-spacing:-0.015em;font-weight:400;margin-bottom:14px;
+}
+.step h4 em{font-style:italic}
+.step p{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:16px}
+.step .ex{
+  padding:12px 14px;background:var(--card);
+  border:1px solid var(--rule-faint);border-radius:2px;
+  font-family:var(--font-display);font-style:italic;
+  font-size:14.5px;line-height:1.5;color:var(--ink);
+}
+.step .ex .from{
+  display:block;font-family:var(--font-mono);font-style:normal;
+  font-size:8px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px;
+}
+
+/* ─── CHAPTER IV — INTEGRATIONS ─── */
+.intg-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  margin-top:32px;
+}
+.intg{
+  display:flex;justify-content:space-between;align-items:baseline;
+  gap:12px;padding:18px 0;
+  border-bottom:1px solid var(--rule-faint);
+  padding-right:24px;
+}
+.intg:nth-child(3n){padding-right:0}
+.intg:nth-last-child(-n+3){border-bottom:none}
+.intg.dim{opacity:0.38}
+.intg .nm{font-family:var(--font-display);font-size:18px;letter-spacing:-0.01em;font-weight:400}
+.intg .tg{font-family:var(--font-mono);font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase}
+.intg-note{
+  margin-top:20px;
+  font-family:var(--font-mono);font-size:9px;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--dim);line-height:1.7;
+}
+
+/* ─── CHAPTER V — METHOD ─── */
+.science-body p{
+  font-family:var(--font-display);font-size:19px;
+  line-height:1.65;margin-bottom:22px;max-width:640px;
+}
+.science-body p em{font-style:italic}
+.sig-block{
+  display:flex;align-items:center;gap:16px;
+  margin-top:40px;padding-top:24px;
+  border-top:1px solid var(--rule);max-width:480px;
+}
+.avatar-sm{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,#7A4A28,#5a3a1e);
+  color:var(--paper);font-family:var(--font-display);
+  font-style:italic;font-size:20px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-weight:400;
+}
+.sig-block .nm{font-family:var(--font-display);font-style:italic;font-size:19px;font-weight:500;letter-spacing:-0.005em}
+.sig-block .rl{font-family:var(--font-mono);font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+/* ─── SIGN OFF / CTA ─── */
+.sign-off{
+  padding:120px 0 80px;
+  text-align:center;
+  border-top:1px solid var(--rule);
+}
+.sign-off .ps{
+  font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:20px;
+}
+.sign-off h2{
+  font-family:var(--font-display);font-weight:300;
+  font-size:clamp(52px,7vw,100px);
+  line-height:0.97;letter-spacing:-0.035em;
+  margin-bottom:32px;max-width:840px;margin-left:auto;margin-right:auto;
+}
+.sign-off h2 em{font-style:italic;font-weight:400}
+.sign-off .ledef{
+  font-family:var(--font-display);font-style:italic;
+  font-size:21px;line-height:1.5;color:var(--muted);
+  max-width:520px;margin:0 auto 40px;
+}
+.sign-off .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{
+  background:var(--ink);color:var(--paper);
+  padding:16px 28px;font-family:var(--font-body);
+  font-size:13px;font-weight:500;text-decoration:none;
+  border:1px solid var(--ink);border-radius:2px;letter-spacing:0.01em;
+  transition:background 0.15s,border-color 0.15s;display:inline-block;
+}
+.btn-primary:hover{background:var(--accent);border-color:var(--accent)}
+.btn-secondary{
+  background:transparent;color:var(--ink);
+  padding:16px 28px;font-size:13px;font-weight:500;
+  text-decoration:none;border:1px solid var(--rule);border-radius:2px;
+  transition:border-color 0.15s,background 0.15s;display:inline-block;
+}
+.btn-secondary:hover{border-color:var(--ink);background:var(--paper-deep)}
+.signed{margin-top:64px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.signed .from{font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+.signed .name{font-family:var(--font-display);font-style:italic;font-size:44px;color:var(--accent);font-weight:400;line-height:1;letter-spacing:-0.02em}
+.signed .when{font-family:var(--font-mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+/* ─── FOOTER ─── */
+footer{border-top:1px solid var(--rule);padding:40px 0 28px;background:var(--paper-deep)}
+.footer-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.footer-brand{font-family:var(--font-display);font-style:italic;font-size:20px;text-decoration:none;color:var(--ink)}
+.footer-meta{font-family:var(--font-mono);font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:12px;color:var(--muted);text-decoration:none}
+.footer-links a:hover{color:var(--ink)}
+
+/* ─── REVEAL ─── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .wrap,.wrap-narrow{padding:0 24px}
+  .list-item{grid-template-columns:1fr;gap:12px;padding:20px 0}
+  .note-spread{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr;border-bottom:none}
+  .step{border-right:none;border-bottom:1px solid var(--rule)}
+  .intg-grid{grid-template-columns:repeat(2,1fr)}
+  .intg:nth-child(3n){padding-right:24px}
+  .intg:nth-last-child(-n+3){border-bottom:1px solid var(--rule-faint)}
+  .intg:nth-child(2n){padding-right:0}
+  .intg:nth-last-child(-n+2){border-bottom:none}
+  .photo-row{grid-template-columns:1fr 1fr;height:auto;grid-auto-rows:220px}
+  .photo-row figure:nth-child(3){grid-column:span 2}
+}
+@media(max-width:640px){
+  .wrap,.wrap-narrow{padding:0 20px}
+  nav a:not(.btn-nav){display:none}
+  .letter-open h1{font-size:44px}
+  .letter-lede{font-size:18px}
+  .chapter-break h2{font-size:30px}
+  .sect h3{font-size:28px}
+  .sign-off h2{font-size:44px}
+  .sign-off{padding:72px 0 56px}
+  .intg-grid{grid-template-columns:1fr}
+  .intg:nth-child(3n){padding-right:0}
+  .intg:nth-last-child(-n+2){border-bottom:1px solid var(--rule-faint)}
+  .intg:last-child{border-bottom:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── MASTHEAD ─── -->
+<header class="masthead">
+  <div class="wrap mh-inner">
+    <a href="/index.html" class="brand">Koers</a>
+    <div class="mh-divider"></div>
+    <div class="mh-byline">A Letter · From the Founder · Vol. I · No. 01</div>
+    <nav>
+      <a href="#sunday">Sundays</a>
+      <a href="#how">First month</a>
+      <a href="/beta.html" data-koers-cta class="btn-nav">Request access →</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ─── LETTER OPENING ─── -->
+<section class="letter-open">
+  <div class="wrap">
+    <div class="stamp">
+      <span>Koers · Vol. I · No. 01</span>
+      <span class="stamp-line"></span>
+      <span>From the founder's desk</span>
+      <span class="stamp-line"></span>
+      <span>May 11, 2026</span>
+    </div>
+    <div class="salutation">Dear rider,</div>
+    <h1>I started Koers because the training apps I tried were <em>shouting.</em></h1>
+    <p class="letter-lede">If you race Cat 3 or 4, if you've got Unbound on the calendar, if you've ridden enough to know that <strong>"GREAT JOB! 🎉"</strong> is not what a coach sounds like — this letter is for you. It explains what I built, why, and what your first month with Koers will look like.</p>
+    <div class="founder-card reveal">
+      <div class="avatar-lg">S</div>
+      <div>
+        <div class="who">Sean</div>
+        <div class="role">Founder · Koers · Racing 25 years</div>
+        <div class="sig">I built the coach I always wanted.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LETTER BODY ─── -->
+<section class="letter-body">
+  <div class="wrap-narrow">
+    <p class="first-p">I have been racing for twenty-five years — nothing famous, just enough seasons to know the difference between a week that built something and a week I wasted. What finally got to me wasn't the training. It was the apps. The tools my friends and I were using treated us like a video game. Streaks. Badges. Notifications celebrating a 20-minute zone-1 spin. <em>Encouragement</em>, instead of explanation.</p>
+    <p>None of us wanted encouragement. We wanted a sentence. <em>"Why is Wednesday hard?"</em> <em>"Should I race the local crit this weekend, or save it for Battenkill?"</em> <em>"My HRV crashed — what changes?"</em> Those questions deserve an answer, not a leaderboard.</p>
+    <p>So I built Koers — and I built Mia to run it. Mia is the coach inside the app. She is software, not a person, and she will never pretend otherwise — but she writes like the best coach I ever rode under. Every Sunday night, you get a paragraph. Five sessions, written in sentences, with a reason next to every one. When something changes — a bad sleep, a missed workout, a race that creeps onto the calendar — Mia edits the paragraph. You see the tracked change in the morning, with a one-sentence note about why.</p>
+    <p><em>That's it.</em> No streaks. No notifications. No green rings. The whole product is the paragraph.</p>
+  </div>
+</section>
+
+<!-- ─── PHOTOS ─── -->
+<div class="photos">
+  <div class="wrap">
+    <div class="photo-row">
+      <figure>
+        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1200&q=80&auto=format&fit=crop" alt="Cyclist at dawn">
+        <figcaption>Tuesday · 05:42 · VO2 openers<em>"Don't race the first one. The point is the fifth."</em></figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=900&q=80&auto=format&fit=crop" alt="Gravel ride">
+        <figcaption>Saturday · 08:10 · Long endurance<em>72 km · Z2 hold · fuel rehearsal</em></figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1000&q=80&auto=format&fit=crop" alt="Climbing cyclist">
+        <figcaption>Friday · 17:30 · Recovery spin<em>"45 min flat. No data. Talk to your wife."</em></figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CHAPTER I ─── -->
+<div class="chapter-break reveal">
+  <div class="num">Chapter I</div>
+  <h2>What you'll get, <em>every Sunday night.</em></h2>
+  <div class="ornament">§</div>
+</div>
+
+<section class="sect" id="sunday">
+  <div class="wrap">
+    <h3 class="reveal">Six things, in one letter.</h3>
+    <p class="sect-intro reveal reveal-delay-1">I didn't build Koers to manage your inbox. The whole week's coaching arrives in a single Sunday-night note, plus quiet edits during the week when the body asks for them.</p>
+    <div class="list-items reveal reveal-delay-2">
+      <div class="list-item">
+        <div class="ix">i.</div>
+        <div class="ht">A paragraph that <em>is</em> the plan.</div>
+        <div class="hd">Five sessions described in full sentences. Reads top-to-bottom in three minutes. Pushed to your Wahoo overnight.<br><em>"Tuesday: openers. Wednesday: VO2 — the one above 110%. Thursday: easy, with a hill near the end."</em></div>
+      </div>
+      <div class="list-item">
+        <div class="ix">ii.</div>
+        <div class="ht">A reason next to every <em>interval.</em></div>
+        <div class="hd">No "5×4 @ 285W" with no context. Every interval has a why beside it — what we're training, what last week's data said, why this number and not last week's.</div>
+      </div>
+      <div class="list-item">
+        <div class="ix">iii.</div>
+        <div class="ht">Quiet edits when the <em>body</em> talks back.</div>
+        <div class="hd">You sleep four hours, Wednesday's hard day moves to Friday before you wake. You'll see it as a tracked edit, signed by Mia, with one sentence of why.</div>
+      </div>
+      <div class="list-item">
+        <div class="ix">iv.</div>
+        <div class="ht">A race plan, <em>two weeks</em> out.</div>
+        <div class="hd">For every A-race: a written briefing. Start-line wattage. Pacing chapters. Where the field will split. What to eat at the Alma checkpoint. Where not to chase.</div>
+      </div>
+      <div class="list-item">
+        <div class="ix">v.</div>
+        <div class="ht">Recovery in a <em>sentence.</em></div>
+        <div class="hd">TSB, HRV, sleep load — under the hood. What you see is the line: <em>"You're at −4, which is exactly where I want you before Unbound."</em></div>
+      </div>
+      <div class="list-item">
+        <div class="ix">vi.</div>
+        <div class="ht">A way to <em>ask</em> anything.</div>
+        <div class="hd">"What if I skip Friday?" "I'm tired today." "Tailwind out, headwind back — should I still go to threshold?" Sentence in, sentence out, plan edited if needed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CHAPTER II ─── -->
+<div class="chapter-break reveal">
+  <div class="num">Chapter II</div>
+  <h2>If you already have a coach — <em>good.</em></h2>
+  <div class="ornament">§</div>
+</div>
+
+<section class="sect alt">
+  <div class="wrap">
+    <h3 class="reveal">Mia works around them.</h3>
+    <div class="coach-body reveal reveal-delay-1">
+      <p>About a third of the riders on Koers already have a human coach. For them, Mia doesn't write the plan — their coach does. She writes the kicker line above each session, the recovery read on Monday morning, the race briefing two weeks out. Your coach sees every conversation you have with her. <em>She's a layer, not a replacement.</em></p>
+      <p>For everyone else, Mia is the coach. The plan, the briefing, the daily edits, the Sunday letter — all her. I built her on Joe Friel's periodization, Stephen Seiler's polarized work, and gravel-specific intensity distributions from a panel of coaches I trust.</p>
+    </div>
+    <div class="note-spread reveal reveal-delay-2">
+      <div class="coach-bubble rider">
+        <div class="tag"><span>Noah · Cat 3</span><span>Tuesday · 07:48</span></div>
+        <div class="q">"Mia — slept 4 hours. Toddler. Should I still do Wednesday VO2?"</div>
+        <div class="b">HRV trend is showing rough nights for the last three days.</div>
+      </div>
+      <div class="coach-bubble">
+        <div class="tag">
+          <span style="display:flex;align-items:center;gap:8px">
+            <span style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#7A4A28,#5a3a1e);color:var(--paper);font-family:var(--font-display);font-style:italic;font-size:11px;display:inline-flex;align-items:center;justify-content:center">M</span>
+            Mia
+          </span>
+          <span>Tuesday · 07:51</span>
+        </div>
+        <div class="q">"No. Wednesday is now Friday. Today: 45 min flat, no data, talk to your wife."</div>
+        <div class="b">Your VO2 work this week is too important to do tired. I moved it to Friday at 06:00 — by then you'll be 3 nights into normal sleep and the morning forecast is dry. Plan is already updated on your Wahoo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CHAPTER III ─── -->
+<div class="chapter-break reveal">
+  <div class="num">Chapter III</div>
+  <h2>What the <em>first month</em> looks like.</h2>
+  <div class="ornament">§</div>
+</div>
+
+<section class="sect" id="how">
+  <div class="wrap">
+    <h3 class="reveal">Three steps, then you're riding.</h3>
+    <p class="sect-intro reveal reveal-delay-1">The whole signup is a six-minute conversation. No surveys with sliders, no "rate your motivation 1–10." Bring an FTP if you have one, a guess if you don't. Mia calibrates in week one.</p>
+    <div class="steps reveal reveal-delay-2">
+      <div class="step">
+        <div class="ix">I.</div>
+        <h4>Sunday<br>— <em>Tell Mia about you.</em></h4>
+        <p>Six minutes. Where you live, when you can ride, what you're aiming at, how you felt last season, the FTP you think you have.</p>
+        <div class="ex"><span class="from">From Mia · Day 1</span>"You said you want to finish Unbound under 14 hours. Let's work backwards from June 1."</div>
+      </div>
+      <div class="step">
+        <div class="ix">II.</div>
+        <h4>Monday<br>— <em>Mia writes week one.</em></h4>
+        <p>Sunday night you get the first letter. Five sessions, three of them under an hour. Week one is calibration — Mia is measuring you before she trusts the FTP you sent.</p>
+        <div class="ex"><span class="from">From Mia · Day 2</span>"Tomorrow's short. I want to see what your legs feel like before I trust the FTP you sent."</div>
+      </div>
+      <div class="step">
+        <div class="ix">III.</div>
+        <h4>Tuesday<br>— <em>The plan responds.</em></h4>
+        <p>You ride. Wahoo sends the file. By the time you're showered, Mia has read it and the next session has been adjusted. The first edit usually surprises people.</p>
+        <div class="ex"><span class="from">From Mia · Day 15</span>"Wednesday moved to Friday. Your HRV's low, forecast says rain. Don't argue with it."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CHAPTER IV — INTEGRATIONS (honest) ─── -->
+<div class="chapter-break reveal">
+  <div class="num">Chapter IV</div>
+  <h2>Where Koers talks to <em>the rest of your kit.</em></h2>
+  <div class="ornament">§</div>
+</div>
+
+<section class="sect">
+  <div class="wrap">
+    <h3 class="reveal">Two-way sync. No exports, no folders.</h3>
+    <p class="sect-intro reveal reveal-delay-1">Workouts land on your head unit overnight. Files come back the second you press stop. You shouldn't have to learn the plumbing.</p>
+    <div class="intg-grid reveal reveal-delay-2">
+      <div class="intg">
+        <span class="nm">Wahoo</span>
+        <span class="tg">Push &amp; sync · Live</span>
+      </div>
+      <div class="intg dim">
+        <span class="nm">Garmin</span>
+        <span class="tg">Push &amp; sync · v2</span>
+      </div>
+      <div class="intg dim">
+        <span class="nm">Strava</span>
+        <span class="tg">Activity log · Planned</span>
+      </div>
+      <div class="intg dim">
+        <span class="nm">Apple Health</span>
+        <span class="tg">Sleep · HRV · Planned</span>
+      </div>
+      <div class="intg dim">
+        <span class="nm">Zwift</span>
+        <span class="tg">Plan export · Planned</span>
+      </div>
+      <div class="intg dim">
+        <span class="nm">Komoot</span>
+        <span class="tg">Routes · Planned</span>
+      </div>
+    </div>
+    <div class="intg-note reveal">
+      Wahoo full sync available now · Manual FIT upload supported for all devices<br>
+      Garmin direct integration in v2 · Everything else on the roadmap
+    </div>
+  </div>
+</section>
+
+<!-- ─── CHAPTER V — THE METHOD ─── -->
+<div class="chapter-break reveal">
+  <div class="num">Chapter V</div>
+  <h2>Why this works, in <em>three paragraphs.</em></h2>
+  <div class="ornament">§</div>
+</div>
+
+<section class="sect alt">
+  <div class="wrap-narrow">
+    <h3 class="reveal">A short note on the method.</h3>
+    <div class="science-body reveal reveal-delay-1">
+      <p>Koers measures the same thing a WorldTour coach measures: <em>Training Stress Balance.</em> It's the rolling difference between the fitness you've built over six weeks and the fatigue you've collected in seven days. It tells you when to push, when to taper, and when the smart move is a rest day even though you feel fine.</p>
+      <p>The training distribution is polarized — about 80% of your time below LT1 (easy enough to talk in sentences), 20% above LT2 (hard enough you can't). That's the model that wins races at the elite level, and the model that produces the most fitness per hour for amateur racers with eight to twelve hours a week.</p>
+      <p>And the conversation — Mia writing you a sentence — is the part the literature doesn't measure but every coached athlete knows. You will keep doing the work if you understand <em>why</em> the work is the work. That's what I built Koers for.</p>
+    </div>
+    <div class="sig-block reveal reveal-delay-2">
+      <div class="avatar-sm">S</div>
+      <div>
+        <div class="nm">— Sean</div>
+        <div class="rl">Founder · Koers · Lintel Studio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SIGN OFF ─── -->
+<section class="sign-off">
+  <div class="ps">P.S. — The first month is free.</div>
+  <h2>Your first plan,<br><em>Sunday night.</em></h2>
+  <p class="ledef">No credit card. No drip sequence. A note from Mia, every Sunday, until you don't want it.</p>
+  <div class="actions">
+    <a href="/beta.html" data-koers-cta class="btn-primary">Request beta access →</a>
+    <a href="/plan.html" class="btn-secondary">Read a sample plan</a>
+  </div>
+  <div class="signed">
+    <div class="from">Written by</div>
+    <div class="name">Sean</div>
+    <div class="when">May 2026 · Omaha, Nebraska</div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="wrap footer-row">
+    <div>
+      <a href="/index.html" class="footer-brand">Koers</a>
+      <div class="footer-meta">Vol. I · No. 01 · 2026 · Lintel Studio · koers.app</div>
+    </div>
+    <div class="footer-links">
+      <a href="/index.html">The Almanac</a>
+      <a href="/plan.html">Sample plan</a>
+      <a href="/beta.html">Beta access</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/koers-config.js"></script>
+<script src="/koers-site.js"></script>
+<script>
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+},{threshold:0.1});
+revealEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

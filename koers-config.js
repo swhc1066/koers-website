@@ -24,6 +24,7 @@ const KOERS_CONFIG = {
   // ─── NAV LINKS ─────────────────────────────────────────────────
   nav: {
     plan:   true,   // /plan.html   — Sample Plan (live)
+    letter: true,  // /letter.html — Founder letter (live)
     guide:  false,  // /guide.html  — Field Guide (not built yet)
     pricing: false, // /pricing.html — Pricing (not built yet)
     beta:   true,   // /beta.html   — Beta signup (live)
@@ -33,6 +34,7 @@ const KOERS_CONFIG = {
   pages: {
     // If false, visiting the page redirects to index
     plan:    true,
+    letter:  true,
     guide:   false,
     pricing: false,
     beta:    true,
