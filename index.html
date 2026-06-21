@@ -495,17 +495,18 @@ nav a:hover{color:var(--accent)}
   border-radius:2px;
   position:relative;
 }
-.plan-row.updated::before{
+.plan-row.updated .badge{order:3}
+.plan-row.updated::after{
   content:'revised';
-  position:absolute;
-  right:8px;
-  top:50%;
-  transform:translateY(-50%);
+  order:2;
   font-family:var(--font-mono);
   font-size:8px;
   letter-spacing:0.14em;
   text-transform:uppercase;
   color:var(--accent);
+  flex-shrink:0;
+  align-self:center;
+  margin-left:8px;
 }
 
 /* ─── CHAPTER II — TUESDAY MORNING ──────────────── */
@@ -1057,10 +1058,10 @@ footer{
     <div class="byline">Vol. I · No. 01 · The Almanac</div>
     <nav>
       <a href="#sunday">Sunday</a>
-      <a href="/plan.html" data-koers-nav="plan">Sample plan</a>
       <a href="#tuesday">Tuesday</a>
       <a href="#wednesday">Wednesday</a>
-      <a href="#method">The method</a>
+      <a href="/plan.html" data-koers-nav="plan">Sample Plan</a>
+      <a href="#method">The Method</a>
       <a href="/beta.html" data-koers-cta class="btn-nav">Beta access</a>
     </nav>
   </div>
@@ -1122,7 +1123,7 @@ footer{
         <span class="title">The plan edits itself</span>
       </a>
       <a class="toc-item" href="#method">
-        <span class="num">IV. — The method</span>
+        <span class="num">IV. — The Method</span>
         <span class="title">Why fatigue, not streaks</span>
       </a>
       <a class="toc-item" href="/beta.html">
