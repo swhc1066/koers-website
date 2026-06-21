@@ -262,13 +262,16 @@ nav a:hover{color:var(--accent)}
   margin-bottom:8px;
 }
 .toc-item .title{
+  display:block;
   font-family:var(--font-display);
   font-size:16px;
   letter-spacing:-0.01em;
   font-weight:400;
+  font-style:italic;
   line-height:1.25;
+  transition:color 0.15s;
 }
-.toc-item:hover .title{font-style:italic;color:var(--accent)}
+.toc-item:hover .title{color:var(--accent)}
 
 /* ─── CHAPTER FRAME ─────────────────────────────── */
 .chapter{
@@ -1112,23 +1115,23 @@ footer{
     <div class="toc">
       <a class="toc-item" href="#sunday">
         <span class="num">I. — Sunday</span>
-        <span class="title">The plan arrives</span>
+        <span class="title" data-title="The plan arrives">The plan arrives</span>
       </a>
       <a class="toc-item" href="#tuesday">
         <span class="num">II. — Tuesday</span>
-        <span class="title">The window opens</span>
+        <span class="title" data-title="The window opens">The window opens</span>
       </a>
       <a class="toc-item" href="#wednesday">
         <span class="num">III. — Wednesday</span>
-        <span class="title">The plan edits itself</span>
+        <span class="title" data-title="The plan edits itself">The plan edits itself</span>
       </a>
       <a class="toc-item" href="#method">
         <span class="num">IV. — The Method</span>
-        <span class="title">Why fatigue, not streaks</span>
+        <span class="title" data-title="Why fatigue, not streaks">Why fatigue, not streaks</span>
       </a>
       <a class="toc-item" href="/beta.html">
         <span class="num">V. — Begin</span>
-        <span class="title">Your first Sunday note</span>
+        <span class="title" data-title="Your first Sunday note">Your first Sunday note</span>
       </a>
     </div>
   </div>
