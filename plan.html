@@ -41,55 +41,47 @@ body{
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:1080px;margin:0 auto;padding:0 40px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 40px}
 
 /* ─── MASTHEAD ─── */
 .masthead{
   border-bottom:1px solid var(--rule);
-  padding:16px 0;
+  padding:18px 0;
+  position:sticky;top:0;
   background:var(--paper);
-  position:sticky;top:0;z-index:50;
+  z-index:100;
 }
-.mh-inner{display:flex;align-items:center;gap:24px}
-.back{
-  font-size:12px;color:var(--muted);text-decoration:none;
-  display:flex;align-items:center;gap:6px;
-  font-family:var(--font-mono);
-  letter-spacing:0.12em;text-transform:uppercase;
-  flex-shrink:0;
-}
-.back:hover{color:var(--ink)}
-.back span{font-size:16px;line-height:1}
-.mh-divider{width:1px;height:20px;background:var(--rule);flex-shrink:0}
+.masthead .inner{display:flex;align-items:baseline;gap:32px}
 .brand{
   font-family:var(--font-display);
   font-style:italic;
-  font-size:22px;
+  font-size:28px;
   font-weight:400;
+  letter-spacing:-0.02em;
   text-decoration:none;
   color:var(--ink);
   flex-shrink:0;
 }
-.mh-label{
+.byline{
   font-family:var(--font-mono);
-  font-size:9px;
+  font-size:10px;
   letter-spacing:0.18em;
   text-transform:uppercase;
   color:var(--muted);
+  flex:1;
 }
-.mh-cta{
-  margin-left:auto;
-  background:var(--ink);
-  color:var(--paper);
-  padding:9px 18px;
-  font-size:12px;
-  font-weight:500;
-  text-decoration:none;
+nav{display:flex;gap:28px;align-items:center}
+nav a{font-size:13px;color:var(--ink);text-decoration:none;font-weight:500;white-space:nowrap}
+nav a:hover{color:var(--accent)}
+.btn-nav{
+  padding:8px 16px;
+  border:1px solid var(--ink);
   border-radius:2px;
-  white-space:nowrap;
-  transition:background 0.15s;
+  font-size:12px;
+  letter-spacing:0.03em;
+  font-weight:500;
 }
-.mh-cta:hover{background:var(--accent)}
+.btn-nav:hover{background:var(--ink);color:var(--paper) !important}
 
 /* ─── PLAN HEADER ─── */
 .plan-header{
@@ -303,18 +295,20 @@ body{
 }
 
 /* ─── SESSION ROWS ─── */
-.session-list{display:flex;flex-direction:column;gap:2px}
+.session-list{display:flex;flex-direction:column}
 .session-row{
   display:grid;
   grid-template-columns:80px 1fr auto;
   gap:16px;
-  align-items:start;
+  align-items:center;
+  min-height:72px;
   padding:18px 16px;
-  border-radius:3px;
+  border-bottom:1px solid var(--rule-faint);
   cursor:pointer;
   transition:background 0.12s;
   position:relative;
 }
+.session-row:last-of-type{border-bottom:none}
 .session-row:hover{background:var(--card)}
 .session-row.expanded{
   background:var(--card);
@@ -389,11 +383,12 @@ body{
 .session-drawer{
   background:var(--card);
   border-radius:0 0 3px 3px;
-  border-top:1px solid var(--rule-faint);
+  border-top:none;
   overflow:hidden;
   max-height:0;
   transition:max-height 0.3s cubic-bezier(0.4,0,0.2,1);
 }
+.session-drawer.open{border-top:1px solid var(--rule-faint)}
 .session-drawer.open{max-height:400px}
 .drawer-inner{padding:20px 16px 24px 112px}
 
@@ -651,12 +646,17 @@ body{
 
 <!-- ─── MASTHEAD ─── -->
 <header class="masthead">
-  <div class="wrap mh-inner">
-    <a href="/index.html" class="back"><span>←</span> The Almanac</a>
-    <div class="mh-divider"></div>
-    <a href="#" class="brand">Koers</a>
-    <div class="mh-label">Sample plan · Gravel Mid-Distance · 12 weeks</div>
-    <a href="/beta.html" data-koers-cta class="mh-cta">Request beta access →</a>
+  <div class="wrap inner">
+    <a href="/" class="brand">Koers</a>
+    <div class="byline">Vol. I · No. 01 · The Almanac</div>
+    <nav>
+      <a href="/#sunday">Sunday</a>
+      <a href="/#tuesday">Tuesday</a>
+      <a href="/#wednesday">Wednesday</a>
+      <a href="/plan.html" data-koers-nav="plan">Sample Plan</a>
+      <a href="/#method">The Method</a>
+      <a href="/beta.html" data-koers-cta class="btn-nav">Beta access</a>
+    </nav>
   </div>
 </header>
 

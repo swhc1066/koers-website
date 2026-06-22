@@ -40,18 +40,41 @@ body{
 /* ─── MASTHEAD ─── */
 .masthead{
   border-bottom:1px solid var(--rule);
-  padding:16px 0;
+  padding:18px 0;
+  position:sticky;top:0;
   background:var(--paper);
-  position:sticky;top:0;z-index:50;
+  z-index:100;
 }
-.mh-inner{display:flex;align-items:center;gap:24px}
-.brand{font-family:var(--font-display);font-style:italic;font-size:24px;font-weight:400;text-decoration:none;color:var(--ink);flex-shrink:0}
-.mh-divider{width:1px;height:20px;background:var(--rule);flex-shrink:0}
-.mh-byline{font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);flex:1}
-nav{display:flex;gap:24px;align-items:center}
+.masthead .inner{display:flex;align-items:baseline;gap:32px}
+.brand{
+  font-family:var(--font-display);
+  font-style:italic;
+  font-size:28px;
+  font-weight:400;
+  letter-spacing:-0.02em;
+  text-decoration:none;
+  color:var(--ink);
+  flex-shrink:0;
+}
+.byline{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  flex:1;
+}
+nav{display:flex;gap:28px;align-items:center}
 nav a{font-size:13px;color:var(--ink);text-decoration:none;font-weight:500;white-space:nowrap}
 nav a:hover{color:var(--accent)}
-.btn-nav{padding:8px 16px;border:1px solid var(--ink);border-radius:2px;font-size:12px;letter-spacing:0.02em;font-weight:500}
+.btn-nav{
+  padding:8px 16px;
+  border:1px solid var(--ink);
+  border-radius:2px;
+  font-size:12px;
+  letter-spacing:0.03em;
+  font-weight:500;
+}
 .btn-nav:hover{background:var(--ink);color:var(--paper) !important}
 
 /* ─── LETTER OPENING ─── */
@@ -378,14 +401,16 @@ footer{border-top:1px solid var(--rule);padding:40px 0 28px;background:var(--pap
 
 <!-- ─── MASTHEAD ─── -->
 <header class="masthead">
-  <div class="wrap mh-inner">
-    <a href="/index.html" class="brand">Koers</a>
-    <div class="mh-divider"></div>
-    <div class="mh-byline">A Letter · From the Founder · Vol. I · No. 01</div>
+  <div class="wrap inner">
+    <a href="/" class="brand">Koers</a>
+    <div class="byline">Vol. I · No. 01 · The Almanac</div>
     <nav>
-      <a href="#sunday">Sundays</a>
-      <a href="#how">First month</a>
-      <a href="/beta.html" data-koers-cta class="btn-nav">Request access →</a>
+      <a href="/#sunday">Sunday</a>
+      <a href="/#tuesday">Tuesday</a>
+      <a href="/#wednesday">Wednesday</a>
+      <a href="/plan.html" data-koers-nav="plan">Sample Plan</a>
+      <a href="/#method">The Method</a>
+      <a href="/beta.html" data-koers-cta class="btn-nav">Beta access</a>
     </nav>
   </div>
 </header>
