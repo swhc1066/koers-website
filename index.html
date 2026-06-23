@@ -770,8 +770,10 @@ nav a:hover{color:var(--accent)}
   height:100%;
   background:var(--accent);
   border-radius:2px;
-  width:0;
-  transition:width 1.2s cubic-bezier(0.4,0,0.2,1);
+  width:100%;
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform 1.2s cubic-bezier(0.4,0,0.2,1);
 }
 .tss-val{
   font-family:var(--font-display);
@@ -1632,9 +1634,9 @@ function animateTSS() {
   const fill = document.getElementById('tss-fill');
   const num = document.getElementById('tss-num');
   const target = 72; // 274 of 380 TSS
-  const targetPct = (274/380)*100;
+  const targetRatio = 274/380;
 
-  fill.style.width = targetPct + '%';
+  fill.style.transform = 'scaleX(' + targetRatio + ')';
 
   let current = 0;
   const step = Math.ceil(274 / 60);
