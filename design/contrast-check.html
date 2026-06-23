@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Koers — old vs new faint text</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4EFE7; --card:#FBF8F2; --white:#FFFFFF; --ink:#1A1A18; --rule:#D9D2C2;
+    --dim-old:#978E7D; --dim-new:#736B55;
+    --muted:#6B6355;
+    --peak:#D4CAB8; --taper:#CCC2B0;
+    --phase-old:#6B6355; --phase-new:#4E463A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Geist',system-ui,sans-serif;padding:48px 32px;line-height:1.5}
+  h1{font-family:'Fraunces',serif;font-weight:300;font-size:40px;letter-spacing:-0.03em;margin-bottom:6px}
+  h1 em{font-style:italic;color:#7A4A28}
+  .sub{font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:40px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1100px}
+  .col-head{font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;justify-content:space-between}
+  .col-head b{color:var(--ink);font-weight:500}
+  .sample{border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin-bottom:24px}
+  .sample .ctx{padding:18px 20px;display:flex;justify-content:space-between;align-items:baseline;gap:16px;border-bottom:1px solid rgba(0,0,0,0.06)}
+  .sample .ctx:last-child{border-bottom:none}
+  .ctx .lbl{font-family:'Geist Mono',monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;opacity:0.85}
+  .ctx .demo{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:0.06em}
+  .ctx .demo.cap{font-family:'Fraunces',serif;font-style:italic;font-size:15px;letter-spacing:0}
+  .ratio{font-family:'Geist Mono',monospace;font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pass{color:#2D6B3A} .fail{color:#8A3A18}
+  .pill{display:inline-block;font-family:'Geist Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;padding:2px 6px;border-radius:2px;margin-left:8px}
+  .pill.pass{background:#EBF5EE} .pill.fail{background:#FEF2EC}
+  .phase{display:grid;grid-template-columns:1fr 1fr;gap:2px;border-radius:3px;overflow:hidden}
+  .pb{padding:12px 14px}
+  .pb .nm{font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:3px}
+  .pb .wk{font-family:'Fraunces',serif;font-size:14px;color:var(--ink)}
+  .note{font-size:13px;color:var(--muted);max-width:1100px;margin-top:32px;line-height:1.6}
+  code{font-family:'Geist Mono',monospace;background:#EDE6D8;padding:1px 5px;border-radius:2px;font-size:0.9em}
+</style>
+</head>
+<body>
+  <h1>The faint text tier — <em>old vs new</em></h1>
+  <div class="sub">Same backgrounds, same fonts · WCAG AA needs 4.5:1 for this size</div>
+
+  <div class="grid">
+    <div>
+      <div class="col-head"><span>Before</span><b>--dim: #978E7D</b></div>
+      <div class="sample" data-col="old"></div>
+    </div>
+    <div>
+      <div class="col-head"><span>After</span><b>--dim: #736B55</b></div>
+      <div class="sample" data-col="new"></div>
+    </div>
+  </div>
+
+  <h1 style="margin-top:48px;font-size:28px">Plan phase chips — <em>Peak / Taper labels</em></h1>
+  <div class="sub">phase-name color on the darkest beige chips</div>
+  <div class="grid">
+    <div>
+      <div class="col-head"><span>Before</span><b>label: #6B6355 (--muted)</b></div>
+      <div class="phase" id="phase-old"></div>
+    </div>
+    <div>
+      <div class="col-head"><span>After</span><b>label: #4E463A</b></div>
+      <div class="phase" id="phase-new"></div>
+    </div>
+  </div>
+
+  <p class="note">Ratios are computed live in this page (WCAG 2.x relative-luminance formula), not hardcoded. The “after” faint tier stays the lightest text on the page while clearing 4.5:1 on paper, card, and white; the phase labels go from washed-out to clearly legible on the dark chips.</p>
+
+<script>
+function lin(c){c/=255;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4)}
+function L(hex){const m=hex.replace('#','');const r=parseInt(m.slice(0,2),16),g=parseInt(m.slice(2,4),16),b=parseInt(m.slice(4,6),16);return 0.2126*lin(r)+0.7152*lin(g)+0.0722*lin(b)}
+function ratio(fg,bg){const a=L(fg),b=L(bg);const hi=Math.max(a,b),lo=Math.min(a,b);return (hi+0.05)/(lo+0.05)}
+function badge(r){const ok=r>=4.5;return `<span class="ratio ${ok?'pass':'fail'}">${r.toFixed(1)}:1</span><span class="pill ${ok?'pass':'fail'}">${ok?'AA':'fail'}</span>`}
+
+const bgs=[
+  {lbl:'on paper #F4EFE7',bg:'#F4EFE7',demo:'Sun · 8:04 PM',cls:''},
+  {lbl:'on card #FBF8F2',bg:'#FBF8F2',demo:'No credit card · No drip',cls:''},
+  {lbl:'on white #FFFFFF',bg:'#FFFFFF',demo:'Wahoo sync available now',cls:''},
+  {lbl:'caption (paper)',bg:'#F4EFE7',demo:'"The fifth is the race."',cls:'cap'},
+];
+function render(col,color){
+  document.querySelector(`.sample[data-col="${col}"]`).innerHTML = bgs.map(x=>`
+    <div class="ctx" style="background:${x.bg}">
+      <span style="color:${color}">
+        <span class="lbl">${x.lbl}</span><br>
+        <span class="demo ${x.cls}" style="color:${color}">${x.demo}</span>
+      </span>
+      <span>${badge(ratio(color,x.bg))}</span>
+    </div>`).join('');
+}
+render('old','#978E7D'); render('new','#736B55');
+
+const chips=[{nm:'Peak',wk:'Weeks 8–10',bg:'#D4CAB8'},{nm:'Taper',wk:'Weeks 11–12',bg:'#CCC2B0'}];
+function renderPhase(id,color){
+  document.getElementById(id).innerHTML = chips.map(c=>`
+    <div class="pb" style="background:${c.bg}">
+      <div class="nm" style="color:${color}">${c.nm} &nbsp; ${badge(ratio(color,c.bg))}</div>
+      <div class="wk">${c.wk}</div>
+    </div>`).join('');
+}
+renderPhase('phase-old','#6B6355'); renderPhase('phase-new','#4E463A');
+</script>
+</body>
+</html>
