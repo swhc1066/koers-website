@@ -1,0 +1,37 @@
+{
+  "detector": {
+    "ignoreRules": [
+      "hero-eyebrow-chip",
+      "numbered-section-markers",
+      "repeated-section-kickers",
+      "all-caps-body",
+      "wide-tracking",
+      "em-dash-overuse",
+      "aphoristic-cadence",
+      "cream-palette",
+      "cramped-padding",
+      "tight-leading"
+    ],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "fraunces",
+        "reason": "Brand display typeface",
+        "createdAt": "2026-06-23T20:58:20.247Z"
+      },
+      {
+        "rule": "overused-font",
+        "value": "geist",
+        "reason": "Brand body typeface",
+        "createdAt": "2026-06-23T20:58:21.097Z"
+      },
+      {
+        "rule": "overused-font",
+        "value": "geist mono",
+        "reason": "Brand label/mono typeface",
+        "createdAt": "2026-06-23T20:58:21.632Z"
+      }
+    ]
+  }
+}
