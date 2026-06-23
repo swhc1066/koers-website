@@ -26,7 +26,7 @@
   --font-body:'Geist',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
   --font-mono:'Geist Mono',ui-monospace,Menlo,monospace;
 }
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
 body{
   background:var(--paper);
   color:var(--ink);
@@ -37,6 +37,7 @@ body{
   min-height:100vh;
 }
 .wrap{max-width:1080px;margin:0 auto;padding:0 40px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
 
 /* ─── MASTHEAD ─── */
 .masthead{
@@ -173,7 +174,6 @@ nav a:hover{color:var(--accent)}
   flex-shrink:0;
   width:24px;
 }
-.what-copy{}
 .what-copy strong{
   font-family:var(--font-display);
   font-size:16px;
@@ -482,6 +482,7 @@ footer{
   .beta-status{margin-top:40px}
 }
 @media(max-width:640px){
+  nav a:not(.btn-nav){display:none}
   .field-row{grid-template-columns:1fr}
   .radio-group{grid-template-columns:1fr}
   .ed-title{font-size:44px}
@@ -660,7 +661,7 @@ footer{
 <!-- ─── FOOTER ─── -->
 <footer>
   <div class="wrap footer-row">
-    <a href="index.html" class="footer-brand">Koers</a>
+    <a href="/" class="footer-brand">Koers</a>
     <div class="footer-meta">Vol. I · No. 01 · 2026 · Lintel Studio · koers.app</div>
   </div>
 </footer>
@@ -750,5 +751,7 @@ document.querySelectorAll('input,select').forEach(el => {
   });
 });
 </script>
+<script src="/koers-config.js"></script>
+<script src="/koers-site.js"></script>
 </body>
 </html>

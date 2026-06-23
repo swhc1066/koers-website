@@ -23,7 +23,7 @@
   --faint:#B8AE9B;
   --accent:#7A4A28;
   --font-display:'Fraunces',Georgia,serif;
-  --font-body:'Geist','Söhne',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --font-body:'Geist',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
   --font-mono:'Geist Mono',ui-monospace,Menlo,monospace;
   --z2-bg:#EEF3F8; --z2-fg:#3A6080;
   --z3-bg:#F0F4EE; --z3-fg:#3A6040;
@@ -32,7 +32,7 @@
   --zss-bg:#F2EEF8; --zss-fg:#5A3A80;
   --rest-bg:#F0EEEB; --rest-fg:#8A8070;
 }
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
 body{
   background:var(--paper);
   color:var(--ink);
@@ -42,6 +42,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 .wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
 
 /* ─── MASTHEAD ─── */
 .masthead{
@@ -325,7 +326,6 @@ nav a:hover{color:var(--accent)}
   color:var(--muted);
   padding-top:3px;
 }
-.sr-content{}
 .sr-type{
   font-family:var(--font-display);
   font-size:18px;
@@ -502,7 +502,6 @@ nav a:hover{color:var(--accent)}
   line-height:1;
   color:var(--accent);
 }
-.tsb-context{}
 .tsb-label{
   font-family:var(--font-mono);
   font-size:8px;
@@ -631,6 +630,7 @@ nav a:hover{color:var(--accent)}
   .drawer-inner{padding:16px 16px 20px 16px}
 }
 @media(max-width:640px){
+  nav a:not(.btn-nav){display:none}
   .session-row{grid-template-columns:64px 1fr}
   .sr-right{display:none}
   .drawer-grid{grid-template-columns:repeat(2,1fr)}

@@ -23,11 +23,11 @@
   --faint:#B8AE9B;
   --accent:#7A4A28;
   --font-display:'Fraunces',Georgia,serif;
-  --font-body:'Geist','Söhne',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --font-body:'Geist',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
   --font-mono:'Geist Mono',ui-monospace,Menlo,monospace;
 }
 
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
 body{
   background:var(--paper);
   color:var(--ink);
@@ -39,6 +39,7 @@ body{
 }
 .wrap{max-width:1200px;margin:0 auto;padding:0 40px}
 .kicker{font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
 
 /* ─── MASTHEAD ─────────────────────────────────── */
 .masthead{
@@ -1035,6 +1036,7 @@ footer{
 }
 @media(max-width:640px){
   .wrap{padding:0 20px}
+  nav a:not(.btn-nav){display:none}
   .cover-headline{font-size:52px}
   .cover-meta{flex-direction:column;gap:12px}
   .toc{grid-template-columns:repeat(2,1fr)}
@@ -1509,7 +1511,7 @@ footer{
 <footer>
   <div class="wrap footer-row">
     <div>
-      <a href="#" class="footer-brand">Koers</a>
+      <a href="/" class="footer-brand">Koers</a>
       <div class="footer-meta">Vol. I · No. 01 · Set in Fraunces &amp; Geist · 2026 · Lintel Studio</div>
     </div>
     <div class="footer-links">

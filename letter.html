@@ -25,7 +25,7 @@
   --font-body:'Geist',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
   --font-mono:'Geist Mono',ui-monospace,Menlo,monospace;
 }
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
 body{
   background:var(--paper);
   color:var(--ink);
@@ -36,6 +36,7 @@ body{
 }
 .wrap{max-width:1080px;margin:0 auto;padding:0 40px}
 .wrap-narrow{max-width:700px;margin:0 auto;padding:0 40px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
 
 /* ─── MASTHEAD ─── */
 .masthead{
@@ -673,7 +674,7 @@ footer{border-top:1px solid var(--rule);padding:40px 0 28px;background:var(--pap
 <footer>
   <div class="wrap footer-row">
     <div>
-      <a href="/index.html" class="footer-brand">Koers</a>
+      <a href="/" class="footer-brand">Koers</a>
       <div class="footer-meta">Vol. I · No. 01 · 2026 · Lintel Studio · koers.app</div>
     </div>
     <div class="footer-links">
