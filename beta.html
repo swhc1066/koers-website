@@ -444,30 +444,42 @@ input.error,select.error{border-color:var(--error)}
 /* ─── FOOTER ─── */
 footer{
   border-top:1px solid var(--rule);
-  padding:28px 0;
+  padding:44px 0 32px;
   background:var(--paper-deep);
 }
 .footer-row{
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  align-items:flex-start;
   flex-wrap:wrap;
-  gap:16px;
+  gap:24px;
 }
 .footer-brand{
   font-family:var(--font-display);
   font-style:italic;
-  font-size:18px;
+  font-size:20px;
+  font-weight:400;
   text-decoration:none;
   color:var(--ink);
 }
 .footer-meta{
   font-family:var(--font-mono);
-  font-size:8px;
+  font-size:9px;
   letter-spacing:0.14em;
   text-transform:uppercase;
   color:var(--muted);
+  margin-top:8px;
 }
+.footer-links{display:flex;gap:24px;flex-wrap:wrap}
+.footer-links a{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-decoration:none;
+}
+.footer-links a:hover{color:var(--ink)}
 
 /* ─── RESPONSIVE ─── */
 @media(max-width:900px){
@@ -661,8 +673,17 @@ footer{
 <!-- ─── FOOTER ─── -->
 <footer>
   <div class="wrap footer-row">
-    <a href="/" class="footer-brand">Koers</a>
-    <div class="footer-meta">Vol. I · No. 01 · 2026 · Lintel Studio · koers.app</div>
+    <div>
+      <a href="/" class="footer-brand">Koers</a>
+      <div class="footer-meta">Vol. I · No. 01 · Set in Fraunces &amp; Geist · 2026 · Lintel Studio</div>
+    </div>
+    <div class="footer-links">
+      <a href="/letter.html">From the founder</a>
+      <a href="#">Press</a>
+      <a href="#">Contact</a>
+      <a href="#">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+    </div>
   </div>
 </footer>
 
