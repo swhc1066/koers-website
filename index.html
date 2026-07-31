@@ -224,20 +224,7 @@ nav a:hover{color:var(--accent)}
   background:var(--paper-deep);
   padding:36px 0;
 }
-.contents-inner{
-  display:grid;
-  grid-template-columns:100px 1fr;
-  gap:48px;
-  align-items:start;
-}
-.contents-label{
-  font-family:var(--font-mono);
-  font-size:9px;
-  letter-spacing:0.2em;
-  text-transform:uppercase;
-  color:var(--muted);
-  padding-top:8px;
-}
+.contents-inner{display:block}
 .toc{
   display:grid;
   grid-template-columns:repeat(5,1fr);
@@ -1030,7 +1017,7 @@ footer{
   .cover-left{padding:56px 24px;border-right:none;border-bottom:1px solid var(--rule)}
   .cover-right{height:400px}
   .toc{grid-template-columns:repeat(3,1fr)}
-  .contents-inner{grid-template-columns:1fr;gap:24px}
+
   .chapter-header{grid-template-columns:1fr;gap:20px}
   .chapter-title{font-size:40px}
   .sunday-grid,.tuesday-grid,.wednesday-grid,.method-grid,.colophon-grid{grid-template-columns:1fr;gap:40px}
