@@ -131,18 +131,26 @@ nav a:hover{color:var(--accent)}
   color:var(--faint);
   margin-bottom:16px;
 }
-.toc-nav{display:flex;flex-direction:column;gap:4px}
+.toc-nav{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
 .toc-nav a{
   font-family:var(--font-mono);
-  font-size:9px;
-  letter-spacing:0.1em;
+  font-size:11px;
+  letter-spacing:0.08em;
   text-transform:uppercase;
   color:var(--muted);
   text-decoration:none;
   padding:4px 0;
   line-height:1.4;
+  text-align:left;
+  transition:color 0.15s;
 }
 .toc-nav a:hover{color:var(--accent)}
+.toc-nav a.active{
+  color:var(--ink);
+  font-weight:600;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
 .policy-content{
   padding:56px 0 96px;
   border-left:1px solid var(--rule-faint);
@@ -177,14 +185,12 @@ nav a:hover{color:var(--accent)}
   line-height:1.7;
   color:var(--ink);
   margin-bottom:32px;
-  max-width:640px;
 }
 .policy-content p{
-  font-size:14px;
+  font-size:15px;
   line-height:1.75;
   color:var(--dim);
   margin-bottom:16px;
-  max-width:640px;
 }
 .policy-content p:last-child{margin-bottom:0}
 .policy-content p strong{color:var(--ink);font-weight:600}
@@ -208,10 +214,9 @@ nav a:hover{color:var(--accent)}
   display:flex;
   flex-direction:column;
   gap:8px;
-  max-width:640px;
 }
 .policy-content ul li{
-  font-size:14px;
+  font-size:15px;
   line-height:1.7;
   color:var(--dim);
   padding-left:16px;
@@ -234,13 +239,12 @@ nav a:hover{color:var(--accent)}
   padding:20px 24px;
   margin:24px 0;
   border-radius:0 2px 2px 0;
-  max-width:640px;
 }
 .callout p{color:var(--ink);font-size:13.5px;margin-bottom:8px}
 .callout p:last-child{margin-bottom:0}
 
 /* table */
-.policy-table-wrap{overflow-x:auto;margin:24px 0;max-width:640px}
+.policy-table-wrap{overflow-x:auto;margin:24px 0}
 .policy-table{
   width:100%;
   border-collapse:collapse;
@@ -606,11 +610,27 @@ footer{
       <a href="/letter.html">From the founder</a>
       <a href="#">Press</a>
       <a href="#">Contact</a>
-      <a href="#">Terms</a>
+      <a href="/terms.html">Terms</a>
       <a href="/privacy.html">Privacy</a>
     </div>
   </div>
 </footer>
 
+<script>
+const tocLinks = document.querySelectorAll('.toc-nav a');
+const sections = document.querySelectorAll('.policy-section[id]');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      tocLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.toc-nav a[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
 </body>
 </html>
