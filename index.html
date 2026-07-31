@@ -260,7 +260,7 @@ nav a:hover{color:var(--accent)}
   font-size:16px;
   letter-spacing:-0.01em;
   font-weight:400;
-  font-style:italic;
+  font-style:normal;
   line-height:1.25;
   transition:color 0.15s;
 }
@@ -979,8 +979,8 @@ nav a:hover{color:var(--accent)}
 /* ─── FOOTER ─────────────────────────────────────── */
 footer{
   padding:44px 0 32px;
-  background:var(--paper-deep);
-  border-top:1px solid var(--rule);
+  background:var(--ink);
+  border-top:none;
 }
 .footer-row{
   display:flex;
@@ -994,14 +994,14 @@ footer{
   font-style:italic;
   font-size:22px;
   text-decoration:none;
-  color:var(--ink);
+  color:var(--paper);
 }
 .footer-meta{
   font-family:var(--font-mono);
   font-size:9px;
   letter-spacing:0.16em;
   text-transform:uppercase;
-  color:var(--muted);
+  color:var(--faint);
   margin-top:8px;
 }
 .footer-links{display:flex;gap:24px;flex-wrap:wrap}
@@ -1010,10 +1010,10 @@ footer{
   font-size:11px;
   letter-spacing:0.14em;
   text-transform:uppercase;
-  color:var(--muted);
+  color:var(--faint);
   text-decoration:none;
 }
-.footer-links a:hover{color:var(--ink)}
+.footer-links a:hover{color:var(--paper)}
 
 /* ─── RESPONSIVE ─────────────────────────────────── */
 @media(max-width:1023px){
@@ -1113,23 +1113,23 @@ footer{
     <div class="toc">
       <a class="toc-item" href="#sunday">
         <span class="num">I. — Sunday</span>
-        <span class="title" data-title="The plan arrives">The plan arrives</span>
+        <span class="title" data-title="The plan arrives">The <em>plan arrives</em></span>
       </a>
       <a class="toc-item" href="#tuesday">
         <span class="num">II. — Tuesday</span>
-        <span class="title" data-title="The window opens">The window opens</span>
+        <span class="title" data-title="The window opens">The <em>window opens</em></span>
       </a>
       <a class="toc-item" href="#wednesday">
         <span class="num">III. — Wednesday</span>
-        <span class="title" data-title="The plan edits itself">The plan edits itself</span>
+        <span class="title" data-title="The plan edits itself">The <em>plan edits itself</em></span>
       </a>
       <a class="toc-item" href="#method">
         <span class="num">IV. — The Method</span>
-        <span class="title" data-title="Why fatigue, not streaks">Why fatigue, not streaks</span>
+        <span class="title" data-title="Why fatigue, not streaks">Why <em>fatigue, not streaks</em></span>
       </a>
       <a class="toc-item" href="/beta.html">
         <span class="num">V. — Begin</span>
-        <span class="title" data-title="Your first Sunday note">Your first Sunday note</span>
+        <span class="title" data-title="Your first Sunday note">Your <em>first Sunday note</em></span>
       </a>
     </div>
   </div>

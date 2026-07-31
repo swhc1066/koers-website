@@ -141,8 +141,8 @@ nav a:hover{color:var(--accent)}
 /* ─── PHOTOS ─── */
 .photos{
   padding:56px 0;
-  background:var(--paper-deep);
-  border-top:1px solid var(--rule);
+  background:var(--ink);
+  border-top:none;
   border-bottom:1px solid var(--rule);
 }
 .photo-row{display:grid;grid-template-columns:2fr 1fr 1.5fr;gap:12px;height:360px}
@@ -352,9 +352,9 @@ nav a:hover{color:var(--accent)}
 .signed .when{font-family:var(--font-mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-top:6px}
 
 /* ─── FOOTER ─── */
-footer{border-top:1px solid var(--rule);padding:40px 0 28px;background:var(--paper-deep)}
+footer{border-top:none;padding:40px 0 28px;background:var(--ink)}
 .footer-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
-.footer-brand{font-family:var(--font-display);font-style:italic;font-size:20px;text-decoration:none;color:var(--ink)}
+.footer-brand{font-family:var(--font-display);font-style:italic;font-size:20px;text-decoration:none;color:var(--paper)}
 .footer-meta{font-family:var(--font-mono);font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:6px}
 .footer-links{display:flex;gap:24px;flex-wrap:wrap}
 .footer-links a{
@@ -362,10 +362,10 @@ footer{border-top:1px solid var(--rule);padding:40px 0 28px;background:var(--pap
   font-size:11px;
   letter-spacing:0.14em;
   text-transform:uppercase;
-  color:var(--muted);
+  color:var(--faint);
   text-decoration:none;
 }
-.footer-links a:hover{color:var(--ink)}
+.footer-links a:hover{color:var(--paper)}
 
 /* ─── REVEAL ─── */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
