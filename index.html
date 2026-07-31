@@ -226,7 +226,7 @@ nav a:hover{color:var(--accent)}
   background:var(--paper-deep);
   padding:20px 0;
   position:sticky;
-  top:63px;
+  top:var(--nav-h, 63px);
   z-index:99;
 }
 .contents-inner{display:block}
@@ -1640,6 +1640,14 @@ function animateTSS() {
     if (current >= 274) clearInterval(interval);
   }, 20);
 }
+
+// ─── NAV HEIGHT → CSS VAR ─────────────────────────────────────
+function setNavHeight(){
+  const h = document.querySelector('.masthead').offsetHeight;
+  document.documentElement.style.setProperty('--nav-h', h + 'px');
+}
+setNavHeight();
+window.addEventListener('resize', setNavHeight);
 
 // ─── HIGHLIGHT ACTIVE TOC ITEM ───────────────────────────────
 const sections = ['sunday','tuesday','wednesday','method','start'];
