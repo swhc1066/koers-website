@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Koers — Your coach. In full sentences.</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -27,7 +29,7 @@
   --font-mono:'Geist Mono',ui-monospace,Menlo,monospace;
 }
 
-html{scroll-behavior:smooth;scroll-padding-top:72px}
+html{scroll-behavior:smooth;scroll-padding-top:148px}
 body{
   background:var(--paper);
   color:var(--ink);
@@ -222,7 +224,10 @@ nav a:hover{color:var(--accent)}
 .contents-strip{
   border-bottom:1px solid var(--rule);
   background:var(--paper-deep);
-  padding:36px 0;
+  padding:20px 0;
+  position:sticky;
+  top:63px;
+  z-index:99;
 }
 .contents-inner{display:block}
 .toc{
